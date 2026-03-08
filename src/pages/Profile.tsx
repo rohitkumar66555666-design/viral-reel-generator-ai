@@ -19,6 +19,7 @@ export default function Profile() {
   const [displayName, setDisplayName] = useState("");
   const [preferredPlatform, setPreferredPlatform] = useState("tiktok");
   const [preferredNiche, setPreferredNiche] = useState("fitness");
+  const [preferredLanguage, setPreferredLanguage] = useState<Language>("english");
 
   useEffect(() => {
     if (!user) { navigate("/auth"); return; }
