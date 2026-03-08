@@ -118,6 +118,11 @@ export default function Profile() {
             </Select>
           </div>
 
+          <div className="space-y-2">
+            <Label>Preferred Output Language</Label>
+            <LanguageSelector selected={preferredLanguage} onSelect={setPreferredLanguage} />
+          </div>
+
           <Button variant="gradient" className="w-full gap-2" onClick={handleSave} disabled={saving}>
             <Save className="h-4 w-4" />
             {saving ? "Saving…" : "Save Profile"}
