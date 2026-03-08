@@ -227,13 +227,13 @@ export default function Landing() {
             <span className="text-sm">Works with</span>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-sm">
-                <Instagram className="h-4 w-4 text-pink-400" /> Instagram
+                <Instagram className="h-4 w-4 text-accent" /> Instagram
               </div>
               <div className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-sm">
-                <Youtube className="h-4 w-4 text-red-400" /> YouTube
+                <Youtube className="h-4 w-4 text-destructive" /> YouTube
               </div>
               <div className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-sm">
-                <Facebook className="h-4 w-4 text-blue-400" /> Facebook
+                <Facebook className="h-4 w-4 text-primary" /> Facebook
               </div>
             </div>
           </motion.div>
