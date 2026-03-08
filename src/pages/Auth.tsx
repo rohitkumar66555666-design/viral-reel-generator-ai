@@ -75,39 +75,79 @@ export default function AuthPage() {
             </h1>
           </div>
           <p className="text-muted-foreground">
-            {isLogin ? "Sign in to your account" : "Create your free account"}
+            {isForgot
+              ? "Enter your email to reset your password"
+              : isLogin
+                ? "Sign in to your account"
+                : "Create your free account"}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="border-border bg-card pl-10 text-foreground placeholder:text-muted-foreground"
-            />
-          </div>
-          <div className="relative">
-            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              className="border-border bg-card pl-10 text-foreground placeholder:text-muted-foreground"
-            />
-          </div>
+        {isForgot ? (
+          <form onSubmit={handleForgotPassword} className="space-y-4">
+            <div className="relative">
+              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="border-border bg-card pl-10 text-foreground placeholder:text-muted-foreground"
+              />
+            </div>
+            <Button type="submit" variant="gradient" className="w-full" disabled={loading}>
+              {loading ? "Sending…" : "Send Reset Link"}
+            </Button>
+            <button
+              type="button"
+              onClick={() => setIsForgot(false)}
+              className="flex w-full items-center justify-center text-sm text-muted-foreground hover:text-foreground"
+            >
+              Back to sign in
+            </button>
+          </form>
+        ) : (
+          <>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="relative">
+                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="border-border bg-card pl-10 text-foreground placeholder:text-muted-foreground"
+                />
+              </div>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  className="border-border bg-card pl-10 text-foreground placeholder:text-muted-foreground"
+                />
+              </div>
 
-          <Button type="submit" variant="gradient" className="w-full" disabled={loading}>
-            {loading ? "Loading…" : isLogin ? "Sign In" : "Create Account"}
-          </Button>
-        </form>
+              {isLogin && (
+                <button
+                  type="button"
+                  onClick={() => setIsForgot(true)}
+                  className="w-full text-right text-xs text-muted-foreground hover:text-primary"
+                >
+                  Forgot password?
+                </button>
+              )}
+
+              <Button type="submit" variant="gradient" className="w-full" disabled={loading}>
+                {loading ? "Loading…" : isLogin ? "Sign In" : "Create Account"}
+              </Button>
+            </form>
 
         <div className="relative my-4">
           <div className="absolute inset-0 flex items-center">
