@@ -24,6 +24,7 @@ const Index = () => {
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
+  const [showUpgrade, setShowUpgrade] = useState(false);
   const { user, loading: authLoading, signOut } = useAuth();
   const { isAdmin } = useAdminRole();
   const navigate = useNavigate();
