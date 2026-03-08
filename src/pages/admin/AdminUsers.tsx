@@ -37,9 +37,26 @@ export default function AdminUsers() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="font-display text-2xl font-bold">User Management</h1>
-        <p className="text-sm text-muted-foreground">{users.length} registered users</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-display text-2xl font-bold">User Management</h1>
+          <p className="text-sm text-muted-foreground">{users.length} registered users</p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            downloadCSV(
+              `users-${format(new Date(), "yyyy-MM-dd")}.csv`,
+              ["Email", "Joined", "Ideas Generated"],
+              users.map((u) => [u.email, format(new Date(u.created_at), "yyyy-MM-dd"), u.ideas_count])
+            )
+          }
+          disabled={users.length === 0}
+        >
+          <Download className="mr-2 h-4 w-4" />
+          Export CSV
+        </Button>
       </div>
 
       <div className="card-gradient rounded-xl border border-border overflow-hidden">
