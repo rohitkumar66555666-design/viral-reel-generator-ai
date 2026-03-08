@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { LanguageSelector, type Language } from "@/components/LanguageSelector";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -18,6 +19,7 @@ export default function Profile() {
   const [displayName, setDisplayName] = useState("");
   const [preferredPlatform, setPreferredPlatform] = useState("tiktok");
   const [preferredNiche, setPreferredNiche] = useState("fitness");
+  const [preferredLanguage, setPreferredLanguage] = useState<Language>("english");
 
   useEffect(() => {
     if (!user) { navigate("/auth"); return; }
@@ -32,6 +34,7 @@ export default function Profile() {
         setDisplayName(data.display_name || "");
         setPreferredPlatform(data.preferred_platform || "tiktok");
         setPreferredNiche(data.preferred_niche || "fitness");
+        setPreferredLanguage((data.preferred_language as Language) || "english");
       } else if (!error) {
         // Profile doesn't exist yet — create one
         await supabase.from("profiles").insert({ user_id: user.id });
@@ -50,6 +53,7 @@ export default function Profile() {
         display_name: displayName,
         preferred_platform: preferredPlatform,
         preferred_niche: preferredNiche,
+        preferred_language: preferredLanguage,
         updated_at: new Date().toISOString(),
       })
       .eq("user_id", user.id);
@@ -112,6 +116,11 @@ export default function Profile() {
                 <SelectItem value="travel">Travel</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Preferred Output Language</Label>
+            <LanguageSelector selected={preferredLanguage} onSelect={setPreferredLanguage} />
           </div>
 
           <Button variant="gradient" className="w-full gap-2" onClick={handleSave} disabled={saving}>
