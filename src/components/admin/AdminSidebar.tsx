@@ -1,7 +1,7 @@
 import {
   BarChart3,
   Users,
-  FileText,
+  Lightbulb,
   MessageSquare,
   Star,
   Activity,
@@ -10,7 +10,12 @@ import {
   Zap,
   LogOut,
   ArrowLeft,
-  BookTemplate,
+  Hash,
+  TrendingUp,
+  CreditCard,
+  PieChart,
+  Layers,
+  Anchor,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useNavigate } from "react-router-dom";
@@ -33,9 +38,14 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { title: "Dashboard", url: "/admin", icon: BarChart3 },
   { title: "Users", url: "/admin/users", icon: Users },
-  { title: "Articles", url: "/admin/articles", icon: FileText },
-  { title: "Prompt Templates", url: "/admin/templates", icon: BookTemplate },
-  { title: "AI Config", url: "/admin/ai-config", icon: Cpu },
+  { title: "Reel Ideas", url: "/admin/reel-ideas", icon: Lightbulb },
+  { title: "Niches", url: "/admin/niches", icon: Layers },
+  { title: "Hook Templates", url: "/admin/hooks", icon: Anchor },
+  { title: "Trending Topics", url: "/admin/trending", icon: TrendingUp },
+  { title: "Hashtags", url: "/admin/hashtags", icon: Hash },
+  { title: "AI Settings", url: "/admin/ai-config", icon: Cpu },
+  { title: "Plans & Credits", url: "/admin/plans", icon: CreditCard },
+  { title: "Analytics", url: "/admin/analytics", icon: PieChart },
   { title: "API Usage", url: "/admin/api-usage", icon: Activity },
   { title: "Messages", url: "/admin/messages", icon: MessageSquare },
   { title: "Feedback", url: "/admin/feedback", icon: Star },
@@ -61,7 +71,7 @@ export function AdminSidebar() {
           <SidebarGroupLabel>
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-primary" />
-              <span className="gradient-text font-bold">Admin Panel</span>
+              <span className="gradient-text font-bold">Viral Reels Admin</span>
             </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
