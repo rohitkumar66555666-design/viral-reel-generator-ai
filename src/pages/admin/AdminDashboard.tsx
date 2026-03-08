@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { StatCard } from "@/components/admin/StatCard";
-import { Users, Activity, TrendingUp, Zap } from "lucide-react";
+import { Users, Activity, TrendingUp, Zap, Download } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { Button } from "@/components/ui/button";
+import { downloadCSV } from "@/lib/csv-export";
+import { format } from "date-fns";
 
 export default function AdminDashboard() {
   const [totalUsers, setTotalUsers] = useState(0);
@@ -35,9 +38,26 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="font-display text-2xl font-bold">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">Overview of your platform</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-display text-2xl font-bold">Dashboard</h1>
+          <p className="text-sm text-muted-foreground">Overview of your platform</p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            downloadCSV(
+              `analytics-${format(new Date(), "yyyy-MM-dd")}.csv`,
+              ["Date", "Ideas Generated"],
+              dailyData.map((d) => [d.date, d.count])
+            )
+          }
+          disabled={dailyData.length === 0}
+        >
+          <Download className="mr-2 h-4 w-4" />
+          Export CSV
+        </Button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
