@@ -291,6 +291,8 @@ const Index = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        <UpgradeDialog open={showUpgrade} onOpenChange={setShowUpgrade} />
       </main>
     </div>
   );
