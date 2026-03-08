@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Zap, Loader2, LogOut } from "lucide-react";
+import { Sparkles, Zap, Loader2, LogOut, Bookmark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
