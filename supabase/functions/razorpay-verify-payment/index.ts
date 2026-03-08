@@ -38,9 +38,16 @@ serve(async (req) => {
 
     // Verify signature
     const body = razorpay_order_id + "|" + razorpay_payment_id;
-    const hmac = new HmacSha256(RAZORPAY_KEY_SECRET);
-    hmac.update(body);
-    const generatedSignature = hmac.hex();
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(RAZORPAY_KEY_SECRET),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+    const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(body));
+    const generatedSignature = new TextDecoder().decode(hexEncode(new Uint8Array(signature)));
 
     if (generatedSignature !== razorpay_signature) {
       throw new Error("Payment verification failed - invalid signature");
