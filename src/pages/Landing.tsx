@@ -19,14 +19,12 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 
 /* ── animation variants ── */
-const easeOut = [0.22, 1, 0.36, 1] as const;
-
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.6, ease: easeOut as unknown as string },
+    transition: { delay: i * 0.12, duration: 0.6, ease: "easeOut" as const },
   }),
 };
 
@@ -35,7 +33,7 @@ const scaleIn = {
   visible: (i: number) => ({
     opacity: 1,
     scale: 1,
-    transition: { delay: i * 0.1, duration: 0.5, ease: easeOut as unknown as string },
+    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const },
   }),
 };
 
@@ -46,7 +44,7 @@ const staggerContainer = {
 
 const staggerItem = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut as unknown as string } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
 /* ── parallax section wrapper ── */
