@@ -30,13 +30,14 @@ const Index = () => {
     const loadProfile = async () => {
       const { data } = await supabase
         .from("profiles")
-        .select("preferred_platform, preferred_niche")
+        .select("preferred_platform, preferred_niche, preferred_language")
         .eq("user_id", user.id)
         .maybeSingle();
 
       if (data) {
         if (data.preferred_platform) setPlatform(data.preferred_platform as Platform);
         if (data.preferred_niche) setNiche(data.preferred_niche as Niche);
+        if (data.preferred_language) setLanguage(data.preferred_language as Language);
       }
     };
     loadProfile();
