@@ -102,7 +102,7 @@ export default function AdminUsers() {
               <TableHead>Email</TableHead>
               <TableHead>Joined</TableHead>
               <TableHead>Plan</TableHead>
-              <TableHead className="text-right">Articles</TableHead>
+              <TableHead className="text-right">Reels Ideas</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
