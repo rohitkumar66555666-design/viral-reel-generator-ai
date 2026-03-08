@@ -270,7 +270,7 @@ const Index = () => {
               </div>
               <p className="font-display text-lg text-muted-foreground">
                 {user
-                  ? "Select your platform & niche, then hit generate!"
+                  ? "Select your platform & feature, then hit generate!"
                   : "Sign in to start generating viral reel ideas!"}
               </p>
             </motion.div>

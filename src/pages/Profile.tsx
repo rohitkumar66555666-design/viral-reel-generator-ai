@@ -102,18 +102,35 @@ export default function Profile() {
           </div>
 
           <div className="space-y-2">
-            <Label>Preferred Niche</Label>
+            <Label>Preferred Feature</Label>
             <Select value={preferredNiche} onValueChange={setPreferredNiche}>
               <SelectTrigger className="border-border bg-background"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="fitness">Fitness</SelectItem>
-                <SelectItem value="motivation">Motivation</SelectItem>
-                <SelectItem value="finance">Finance</SelectItem>
-                <SelectItem value="tech">Tech</SelectItem>
-                <SelectItem value="comedy">Comedy</SelectItem>
-                <SelectItem value="beauty">Beauty</SelectItem>
-                <SelectItem value="food">Food</SelectItem>
-                <SelectItem value="travel">Travel</SelectItem>
+              <SelectContent className="max-h-[300px]">
+                <SelectItem value="motivation">💪 Motivation</SelectItem>
+                <SelectItem value="finance">💰 Finance</SelectItem>
+                <SelectItem value="education">📚 Education</SelectItem>
+                <SelectItem value="fitness">🏋️ Fitness</SelectItem>
+                <SelectItem value="comedy">😂 Comedy</SelectItem>
+                <SelectItem value="travel">✈️ Travel</SelectItem>
+                <SelectItem value="technology">💻 Technology</SelectItem>
+                <SelectItem value="beauty">💄 Beauty</SelectItem>
+                <SelectItem value="food">🍕 Food & Cooking</SelectItem>
+                <SelectItem value="health">🧘 Health & Wellness</SelectItem>
+                <SelectItem value="gaming">🎮 Gaming</SelectItem>
+                <SelectItem value="music">🎵 Music</SelectItem>
+                <SelectItem value="fashion">👗 Fashion</SelectItem>
+                <SelectItem value="sports">⚽ Sports</SelectItem>
+                <SelectItem value="pets">🐾 Pets & Animals</SelectItem>
+                <SelectItem value="diy">🔨 DIY & Crafts</SelectItem>
+                <SelectItem value="parenting">👶 Parenting</SelectItem>
+                <SelectItem value="business">📈 Business & Startups</SelectItem>
+                <SelectItem value="science">🔬 Science</SelectItem>
+                <SelectItem value="art">🎨 Art & Design</SelectItem>
+                <SelectItem value="relationships">❤️ Relationships</SelectItem>
+                <SelectItem value="productivity">⏱️ Productivity</SelectItem>
+                <SelectItem value="mindset">🧠 Mindset</SelectItem>
+                <SelectItem value="realestate">🏠 Real Estate</SelectItem>
+                <SelectItem value="crypto">🪙 Crypto & Web3</SelectItem>
               </SelectContent>
             </Select>
           </div>
