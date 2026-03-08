@@ -1,10 +1,13 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import instagramLogo from "@/assets/instagram-logo.png";
+import facebookLogo from "@/assets/facebook-logo.png";
+import youtubeLogo from "@/assets/youtube-logo.png";
 
 const platforms = [
-  { id: "instagram", label: "Instagram Reels", icon: "📸" },
-  { id: "facebook", label: "Facebook Reels", icon: "📘" },
-  { id: "youtube", label: "YouTube Shorts", icon: "🎬" },
+  { id: "instagram", label: "Instagram Reels", logo: instagramLogo },
+  { id: "facebook", label: "Facebook Reels", logo: facebookLogo },
+  { id: "youtube", label: "YouTube Shorts", logo: youtubeLogo },
 ] as const;
 
 export type Platform = (typeof platforms)[number]["id"];
@@ -30,7 +33,7 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
               : "border border-border bg-card hover:border-primary/40"
           )}
         >
-          <span className="text-lg">{p.icon}</span>
+          <img src={p.logo} alt={p.label} className="h-5 w-5 object-contain" />
           <span className={selected === p.id ? "gradient-text" : "text-foreground"}>
             {p.label}
           </span>
