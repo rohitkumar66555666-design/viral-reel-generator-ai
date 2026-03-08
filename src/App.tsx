@@ -21,6 +21,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/saved" element={<SavedIdeas />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

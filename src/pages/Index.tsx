@@ -216,7 +216,13 @@ const Index = () => {
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 {ideas.map((idea, i) => (
-                  <IdeaCard key={idea.id} idea={idea} index={i} />
+                  <IdeaCard
+                    key={idea.id}
+                    idea={idea}
+                    index={i}
+                    isSaved={savedTitles.has(idea.title)}
+                    onBookmark={handleBookmark}
+                  />
                 ))}
               </div>
             </motion.div>
