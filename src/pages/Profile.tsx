@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Save, User } from "lucide-react";
+import { ArrowLeft, Save, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export default function Profile() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -144,6 +144,17 @@ export default function Profile() {
             <Save className="h-4 w-4" />
             {saving ? "Saving…" : "Save Profile"}
           </Button>
+
+          <div className="border-t border-border pt-4">
+            <Button
+              variant="outline"
+              className="w-full gap-2 text-destructive hover:bg-destructive/10 hover:text-destructive"
+              onClick={async () => { await signOut(); navigate("/"); }}
+            >
+              <LogOut className="h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </motion.div>
     </div>
