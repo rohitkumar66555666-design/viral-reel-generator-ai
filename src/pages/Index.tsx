@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
 import { NicheSelector, type Niche } from "@/components/NicheSelector";
+import { LanguageSelector, type Language } from "@/components/LanguageSelector";
 import { IdeaCard, type ReelIdea } from "@/components/IdeaCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,6 +17,7 @@ const Index = () => {
   const [platform, setPlatform] = useState<Platform>("instagram");
   const [niche, setNiche] = useState<Niche>("motivation");
   const [ideas, setIdeas] = useState<ReelIdea[]>([]);
+  const [language, setLanguage] = useState<Language>("english");
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
@@ -92,7 +94,7 @@ const Index = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-ideas", {
-        body: { platform, niche },
+        body: { platform, niche, language },
       });
 
       if (error) {
@@ -190,6 +192,12 @@ const Index = () => {
                 Niche
               </label>
               <NicheSelector selected={niche} onSelect={setNiche} />
+            </div>
+            <div className="flex-1">
+              <label className="mb-2 block font-display text-sm font-medium text-muted-foreground">
+                Output Language
+              </label>
+              <LanguageSelector selected={language} onSelect={setLanguage} />
             </div>
             <Button
               variant="gradient"
