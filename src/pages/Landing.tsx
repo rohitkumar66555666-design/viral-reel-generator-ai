@@ -60,27 +60,20 @@ function ParallaxSection({
   id?: string;
   speed?: number;
 }) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [80 * speed, -80 * speed]);
-  const smoothY = useSpring(y, { stiffness: 100, damping: 30 });
-
-  // Disable parallax on mobile to prevent layout issues
-  if (isMobile) {
-    return (
-      <section id={id} className={className}>
-        {children}
-      </section>
-    );
-  }
+  const rawY = useTransform(scrollYProgress, [0, 1], [80 * speed, -80 * speed]);
+  const y = useSpring(rawY, { stiffness: 100, damping: 30 });
 
   return (
-    <section ref={ref} id={id} className={className}>
-      <motion.div style={{ y: smoothY }}>{children}</motion.div>
+    <section id={id} className={className}>
+      <div ref={ref}>
+        <motion.div style={isMobile ? undefined : { y }}>{children}</motion.div>
+      </div>
     </section>
   );
 }
