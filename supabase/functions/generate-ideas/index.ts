@@ -12,11 +12,16 @@ serve(async (req) => {
   }
 
   try {
-    const { platform, niche } = await req.json();
+    const { platform, niche, language = "english" } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
+    const langInstruction = language !== "english"
+      ? `IMPORTANT: Write ALL titles, hooks, scripts, captions, and hashtags in ${language}. Only the JSON keys should remain in English.`
+      : "";
+
     const systemPrompt = `You are a viral content strategist. Generate exactly 10 viral reel ideas for ${platform} in the ${niche} niche.
+${langInstruction}
 
 Return ONLY a valid JSON array (no markdown, no code blocks) with exactly 10 objects. Each object must have:
 - "id": number (1-10)
