@@ -148,7 +148,7 @@ export function IdeaCard({ idea, index, niche, isSaved, onBookmark, onRemove }: 
         {showVideo && (
           <div className="mt-2">
             <ProtectedVideoPlayer
-              src="/videos/demo-reference.mp4"
+              src={videoSrc}
               watermarkText="PREVIEW ONLY"
             />
           </div>
