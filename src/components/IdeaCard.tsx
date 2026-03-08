@@ -63,6 +63,8 @@ interface IdeaCardProps {
 }
 
 export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCardProps) {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
