@@ -98,7 +98,7 @@ const Index = () => {
     }
 
     if ((usageCount ?? 0) >= FREE_DAILY_LIMIT) {
-      toast.error(`Daily limit reached (${FREE_DAILY_LIMIT} ideas/day). Upgrade to Pro for unlimited!`);
+      setShowUpgrade(true);
       return;
     }
 
