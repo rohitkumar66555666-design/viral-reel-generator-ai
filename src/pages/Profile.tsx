@@ -53,6 +53,7 @@ export default function Profile() {
         display_name: displayName,
         preferred_platform: preferredPlatform,
         preferred_niche: preferredNiche,
+        preferred_language: preferredLanguage,
         updated_at: new Date().toISOString(),
       })
       .eq("user_id", user.id);
