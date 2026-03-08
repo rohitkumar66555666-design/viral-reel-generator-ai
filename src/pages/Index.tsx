@@ -118,6 +118,9 @@ const Index = () => {
                   {FREE_DAILY_LIMIT} free ideas/day
                 </span>
                 <Button variant="gradient" size="sm">Go Pro ✨</Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate("/saved")} title="Saved ideas">
+                  <Bookmark className="mr-1 h-4 w-4" /> Saved
+                </Button>
                 <Button variant="ghost" size="icon" onClick={signOut} title="Sign out">
                   <LogOut className="h-4 w-4" />
                 </Button>
