@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Zap, Loader2, LogOut, Bookmark, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,22 @@ const Index = () => {
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+
+  // Load profile preferences as defaults
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("profiles")
+      .select("preferred_platform, preferred_niche")
+      .eq("user_id", user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          if (data.preferred_platform) setPlatform(data.preferred_platform as Platform);
+          if (data.preferred_niche) setNiche(data.preferred_niche as Niche);
+        }
+      });
+  }, [user]);
 
   const handleBookmark = async (idea: ReelIdea) => {
     if (!user) { navigate("/auth"); return; }
