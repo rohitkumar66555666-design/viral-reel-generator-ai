@@ -226,14 +226,14 @@ export default function Landing() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }}
-            className="mt-12 flex items-center justify-center gap-6 text-muted-foreground"
+            className="mt-12 flex flex-col items-center gap-3 text-muted-foreground sm:flex-row sm:gap-6"
           >
             <span className="text-sm">Works with</span>
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
-              className="flex items-center gap-4"
+              className="flex flex-wrap items-center justify-center gap-3 sm:gap-4"
             >
               {[
                 { icon: Instagram, label: "Instagram", color: "text-accent" },
