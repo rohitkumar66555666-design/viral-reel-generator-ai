@@ -163,7 +163,7 @@ export default function AdminUsers() {
                   <p className="text-sm">{format(new Date(selectedUser.created_at), "PPP")}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Articles Generated</p>
+                  <p className="text-xs text-muted-foreground">Reels Ideas Generated</p>
                   <p className="text-sm font-medium">{selectedUser.ideas_count}</p>
                 </div>
               </div>
