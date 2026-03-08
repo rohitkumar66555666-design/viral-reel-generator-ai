@@ -73,8 +73,8 @@ export default function AdminUsers() {
           onClick={() =>
             downloadCSV(
               `users-${format(new Date(), "yyyy-MM-dd")}.csv`,
-              ["Email", "Joined", "Articles Generated"],
-              users.map((u) => [u.email, format(new Date(u.created_at), "yyyy-MM-dd"), u.ideas_count])
+          ["Email", "Joined", "Reels Ideas Generated"],
+          users.map((u) => [u.email, format(new Date(u.created_at), "yyyy-MM-dd"), u.ideas_count])
             )
           }
           disabled={users.length === 0}
