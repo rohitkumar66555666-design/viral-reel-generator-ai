@@ -1,13 +1,16 @@
 import {
   BarChart3,
   Users,
+  FileText,
   MessageSquare,
   Star,
   Activity,
   Settings,
+  Cpu,
   Zap,
   LogOut,
   ArrowLeft,
+  BookTemplate,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useNavigate } from "react-router-dom";
@@ -30,9 +33,12 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { title: "Dashboard", url: "/admin", icon: BarChart3 },
   { title: "Users", url: "/admin/users", icon: Users },
+  { title: "Articles", url: "/admin/articles", icon: FileText },
+  { title: "Prompt Templates", url: "/admin/templates", icon: BookTemplate },
+  { title: "AI Config", url: "/admin/ai-config", icon: Cpu },
+  { title: "API Usage", url: "/admin/api-usage", icon: Activity },
   { title: "Messages", url: "/admin/messages", icon: MessageSquare },
   { title: "Feedback", url: "/admin/feedback", icon: Star },
-  { title: "API Usage", url: "/admin/api-usage", icon: Activity },
   { title: "Settings", url: "/admin/settings", icon: Settings },
 ];
 

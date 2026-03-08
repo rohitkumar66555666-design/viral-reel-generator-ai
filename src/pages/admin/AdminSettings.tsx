@@ -37,10 +37,14 @@ export default function AdminSettings() {
   const save = async () => {
     setSaving(true);
     for (const [key, value] of Object.entries(settings)) {
-      await supabase
+      const { data } = await supabase
         .from("app_settings")
         .update({ value, updated_at: new Date().toISOString() })
-        .eq("key", key);
+        .eq("key", key)
+        .select();
+      if (!data || data.length === 0) {
+        await supabase.from("app_settings").insert({ key, value });
+      }
     }
     toast.success("Settings saved!");
     setSaving(false);
@@ -53,67 +57,102 @@ export default function AdminSettings() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-display text-2xl font-bold">Settings</h1>
-        <p className="text-sm text-muted-foreground">Control app configuration</p>
+        <h1 className="font-display text-2xl font-bold">General Settings</h1>
+        <p className="text-sm text-muted-foreground">Manage application-wide configurations</p>
       </div>
 
       <div className="max-w-lg space-y-8">
-        {/* Free plan limit */}
+        {/* Branding */}
         <div className="card-gradient rounded-xl border border-border p-6 space-y-4">
-          <h3 className="font-display font-semibold">Free Plan Limits</h3>
+          <h3 className="font-display font-semibold">Branding</h3>
           <div className="space-y-2">
-            <Label htmlFor="free_daily_limit">Ideas per day (free users)</Label>
+            <Label>App Name</Label>
             <Input
-              id="free_daily_limit"
-              type="number"
-              value={settings.free_daily_limit || "5"}
-              onChange={(e) => update("free_daily_limit", e.target.value)}
+              value={settings.app_name || "AI Article Generator"}
+              onChange={(e) => update("app_name", e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Support Email</Label>
+            <Input
+              type="email"
+              value={settings.support_email || ""}
+              onChange={(e) => update("support_email", e.target.value)}
+              placeholder="support@example.com"
             />
           </div>
         </div>
 
-        {/* Premium toggle */}
+        {/* Plan Limits */}
         <div className="card-gradient rounded-xl border border-border p-6 space-y-4">
-          <h3 className="font-display font-semibold">Premium Features</h3>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="premium_enabled">Enable premium features</Label>
-            <Switch
-              id="premium_enabled"
-              checked={settings.premium_enabled === "true"}
-              onCheckedChange={(checked) => update("premium_enabled", checked ? "true" : "false")}
-            />
+          <h3 className="font-display font-semibold">Plan Limits</h3>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label>Free Plan – Articles/Day</Label>
+              <Input
+                type="number"
+                value={settings.free_daily_limit || "5"}
+                onChange={(e) => update("free_daily_limit", e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Pro Plan – Articles/Day</Label>
+              <Input
+                type="number"
+                value={settings.pro_daily_limit || "50"}
+                onChange={(e) => update("pro_daily_limit", e.target.value)}
+              />
+            </div>
           </div>
         </div>
 
         {/* Pricing */}
         <div className="card-gradient rounded-xl border border-border p-6 space-y-4">
-          <h3 className="font-display font-semibold">Pricing Plans</h3>
+          <h3 className="font-display font-semibold">Pricing</h3>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="free_plan_price">Free ($)</Label>
+              <Label>Free ($)</Label>
               <Input
-                id="free_plan_price"
                 type="number"
                 value={settings.free_plan_price || "0"}
                 onChange={(e) => update("free_plan_price", e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="pro_plan_price">Pro ($)</Label>
+              <Label>Pro ($)</Label>
               <Input
-                id="pro_plan_price"
                 type="number"
                 value={settings.pro_plan_price || "9"}
                 onChange={(e) => update("pro_plan_price", e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="agency_plan_price">Agency ($)</Label>
+              <Label>Agency ($)</Label>
               <Input
-                id="agency_plan_price"
                 type="number"
                 value={settings.agency_plan_price || "29"}
                 onChange={(e) => update("agency_plan_price", e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Toggles */}
+        <div className="card-gradient rounded-xl border border-border p-6 space-y-4">
+          <h3 className="font-display font-semibold">Features</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label>Enable Premium Features</Label>
+              <Switch
+                checked={settings.premium_enabled === "true"}
+                onCheckedChange={(c) => update("premium_enabled", c ? "true" : "false")}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <Label>Maintenance Mode</Label>
+              <Switch
+                checked={settings.maintenance_mode === "true"}
+                onCheckedChange={(c) => update("maintenance_mode", c ? "true" : "false")}
               />
             </div>
           </div>

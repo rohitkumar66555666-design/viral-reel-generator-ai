@@ -15,6 +15,9 @@ import ResetPassword from "./pages/ResetPassword";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
+import AdminArticles from "./pages/admin/AdminArticles";
+import AdminPromptTemplates from "./pages/admin/AdminPromptTemplates";
+import AdminAIConfig from "./pages/admin/AdminAIConfig";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 import AdminApiUsage from "./pages/admin/AdminApiUsage";
@@ -40,6 +43,9 @@ const App = () => (
               <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<AdminDashboard />} />
                 <Route path="users" element={<AdminUsers />} />
+                <Route path="articles" element={<AdminArticles />} />
+                <Route path="templates" element={<AdminPromptTemplates />} />
+                <Route path="ai-config" element={<AdminAIConfig />} />
                 <Route path="messages" element={<AdminMessages />} />
                 <Route path="feedback" element={<AdminFeedback />} />
                 <Route path="api-usage" element={<AdminApiUsage />} />
