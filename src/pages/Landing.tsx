@@ -13,9 +13,6 @@ import {
   Check,
   ArrowRight,
 } from "lucide-react";
-import instagramLogo from "@/assets/instagram-logo.png";
-import facebookLogo from "@/assets/facebook-logo.png";
-import youtubeLogo from "@/assets/youtube-logo.png";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -225,36 +222,6 @@ export default function Landing() {
             </motion.div>
           </motion.div>
 
-          {/* Platform badges */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.5 }}
-            className="mt-12 flex flex-col items-center gap-3 text-muted-foreground sm:flex-row sm:gap-6"
-          >
-            <span className="text-sm">Works with</span>
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              animate="visible"
-              className="flex flex-wrap items-center justify-center gap-3 sm:gap-4"
-            >
-              {[
-                { logo: instagramLogo, label: "Instagram Reels" },
-                { logo: facebookLogo, label: "Facebook Reels" },
-                { logo: youtubeLogo, label: "YouTube Shorts" },
-              ].map((p) => (
-                <motion.div
-                  key={p.label}
-                  variants={staggerItem}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  className="flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-sm transition-colors hover:bg-muted/80"
-                >
-                  <img src={p.logo} alt={p.label} className="h-5 w-5 object-contain" /> {p.label}
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
         </motion.div>
       </section>
 
