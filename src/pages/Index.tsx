@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Zap, Loader2, LogOut, Bookmark, User } from "lucide-react";
+import { Sparkles, Zap, Loader2, LogOut, Bookmark, User, Shield } from "lucide-react";
 import { ContactFeedbackDialog } from "@/components/ContactFeedbackDialog";
+import { useAdminRole } from "@/hooks/useAdminRole";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
