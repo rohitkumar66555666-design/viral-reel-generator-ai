@@ -146,6 +146,7 @@ const Index = () => {
                 <Button variant="ghost" size="icon" onClick={() => navigate("/profile")} title="Profile">
                   <User className="h-4 w-4" />
                 </Button>
+                <ContactFeedbackDialog />
                 <Button variant="ghost" size="icon" onClick={signOut} title="Sign out">
                   <LogOut className="h-4 w-4" />
                 </Button>
