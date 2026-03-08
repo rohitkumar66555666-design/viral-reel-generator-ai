@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Zap, Loader2, LogOut } from "lucide-react";
+import { Sparkles, Zap, Loader2, LogOut, Bookmark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
@@ -18,8 +18,35 @@ const Index = () => {
   const [ideas, setIdeas] = useState<ReelIdea[]>([]);
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
+  const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+
+  const handleBookmark = async (idea: ReelIdea) => {
+    if (!user) { navigate("/auth"); return; }
+    if (savedTitles.has(idea.title)) {
+      toast.info("Already saved!");
+      return;
+    }
+    const { error } = await supabase.from("saved_ideas").insert({
+      user_id: user.id,
+      title: idea.title,
+      hook: idea.hook,
+      script: idea.script,
+      caption: idea.caption,
+      hashtags: idea.hashtags,
+      viral_score: idea.viralScore,
+      platform,
+      niche,
+    });
+    if (error) {
+      toast.error("Failed to save idea");
+      console.error(error);
+    } else {
+      setSavedTitles((prev) => new Set(prev).add(idea.title));
+      toast.success("Idea saved! ⭐");
+    }
+  };
 
   const handleGenerate = async () => {
     if (!user) {
@@ -91,6 +118,9 @@ const Index = () => {
                   {FREE_DAILY_LIMIT} free ideas/day
                 </span>
                 <Button variant="gradient" size="sm">Go Pro ✨</Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate("/saved")} title="Saved ideas">
+                  <Bookmark className="mr-1 h-4 w-4" /> Saved
+                </Button>
                 <Button variant="ghost" size="icon" onClick={signOut} title="Sign out">
                   <LogOut className="h-4 w-4" />
                 </Button>
@@ -186,7 +216,13 @@ const Index = () => {
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 {ideas.map((idea, i) => (
-                  <IdeaCard key={idea.id} idea={idea} index={i} />
+                  <IdeaCard
+                    key={idea.id}
+                    idea={idea}
+                    index={i}
+                    isSaved={savedTitles.has(idea.title)}
+                    onBookmark={handleBookmark}
+                  />
                 ))}
               </div>
             </motion.div>

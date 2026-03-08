@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, Check, Zap } from "lucide-react";
+import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -53,7 +53,15 @@ function CopyBtn({ text, label }: { text: string; label: string }) {
   );
 }
 
-export function IdeaCard({ idea, index }: { idea: ReelIdea; index: number }) {
+interface IdeaCardProps {
+  idea: ReelIdea;
+  index: number;
+  isSaved?: boolean;
+  onBookmark?: (idea: ReelIdea) => void;
+  onRemove?: (idea: ReelIdea) => void;
+}
+
+export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -66,7 +74,31 @@ export function IdeaCard({ idea, index }: { idea: ReelIdea; index: number }) {
           <span className="mr-2 text-muted-foreground">#{idea.id}</span>
           {idea.title}
         </h3>
-        <ViralScoreBadge score={idea.viralScore} />
+        <div className="flex items-center gap-2">
+          <ViralScoreBadge score={idea.viralScore} />
+          {onBookmark && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`h-8 w-8 ${isSaved ? "text-primary" : "text-muted-foreground hover:text-primary"}`}
+              onClick={() => onBookmark(idea)}
+              title={isSaved ? "Saved" : "Save idea"}
+            >
+              {isSaved ? <BookmarkCheck className="h-4 w-4" /> : <Bookmark className="h-4 w-4" />}
+            </Button>
+          )}
+          {onRemove && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground hover:text-destructive"
+              onClick={() => onRemove(idea)}
+              title="Remove from saved"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="mb-3 rounded-lg bg-muted/50 p-3">

@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      saved_ideas: {
+        Row: {
+          caption: string
+          created_at: string
+          hashtags: string
+          hook: string
+          id: string
+          niche: string
+          platform: string
+          script: string
+          title: string
+          user_id: string
+          viral_score: number
+        }
+        Insert: {
+          caption: string
+          created_at?: string
+          hashtags: string
+          hook: string
+          id?: string
+          niche: string
+          platform: string
+          script: string
+          title: string
+          user_id: string
+          viral_score: number
+        }
+        Update: {
+          caption?: string
+          created_at?: string
+          hashtags?: string
+          hook?: string
+          id?: string
+          niche?: string
+          platform?: string
+          script?: string
+          title?: string
+          user_id?: string
+          viral_score?: number
+        }
+        Relationships: []
+      }
       usage_logs: {
         Row: {
           created_at: string
