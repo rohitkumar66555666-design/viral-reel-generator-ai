@@ -193,6 +193,12 @@ const Index = () => {
               </label>
               <NicheSelector selected={niche} onSelect={setNiche} />
             </div>
+            <div className="flex-1">
+              <label className="mb-2 block font-display text-sm font-medium text-muted-foreground">
+                Output Language
+              </label>
+              <LanguageSelector selected={language} onSelect={setLanguage} />
+            </div>
             <Button
               variant="gradient"
               size="lg"
