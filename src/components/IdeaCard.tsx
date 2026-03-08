@@ -15,6 +15,34 @@ export interface ReelIdea {
   viralScore: number;
 }
 
+const nicheVideoMap: Record<string, string> = {
+  motivation: "/videos/niche-motivation.mp4",
+  finance: "/videos/niche-finance.mp4",
+  education: "/videos/niche-education.mp4",
+  fitness: "/videos/niche-fitness.mp4",
+  comedy: "/videos/niche-comedy.mp4",
+  travel: "/videos/niche-travel.mp4",
+  technology: "/videos/niche-technology.mp4",
+  beauty: "/videos/niche-beauty.mp4",
+  food: "/videos/niche-food.mp4",
+  health: "/videos/niche-health.mp4",
+  gaming: "/videos/niche-gaming.mp4",
+  music: "/videos/niche-music.mp4",
+  fashion: "/videos/niche-fashion.mp4",
+  sports: "/videos/niche-sports.mp4",
+  pets: "/videos/niche-pets.mp4",
+  diy: "/videos/niche-diy.mp4",
+  parenting: "/videos/niche-parenting.mp4",
+  business: "/videos/niche-business.mp4",
+  science: "/videos/niche-science.mp4",
+  art: "/videos/niche-art.mp4",
+  relationships: "/videos/niche-relationships.mp4",
+  productivity: "/videos/niche-productivity.mp4",
+  mindset: "/videos/niche-mindset.mp4",
+  realestate: "/videos/niche-realestate.mp4",
+  crypto: "/videos/niche-crypto.mp4",
+};
+
 function ViralScoreBadge({ score }: { score: number }) {
   const color =
     score >= 85
