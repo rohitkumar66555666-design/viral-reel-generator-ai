@@ -9,6 +9,7 @@ import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
 import { NicheSelector, type Niche } from "@/components/NicheSelector";
 import { LanguageSelector, type Language } from "@/components/LanguageSelector";
 import { IdeaCard, type ReelIdea } from "@/components/IdeaCard";
+import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
