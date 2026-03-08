@@ -250,6 +250,7 @@ const Index = () => {
                     key={idea.id}
                     idea={idea}
                     index={i}
+                    niche={niche}
                     isSaved={savedTitles.has(idea.title)}
                     onBookmark={handleBookmark}
                   />
