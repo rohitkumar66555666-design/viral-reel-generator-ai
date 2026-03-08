@@ -11,6 +11,7 @@ import AuthPage from "./pages/Auth";
 import SavedIdeas from "./pages/SavedIdeas";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import ResetPassword from "./pages/ResetPassword";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/" element={<Landing />} />
               <Route path="/app" element={<Index />} />
               <Route path="/auth" element={<AuthPage />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/saved" element={<SavedIdeas />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin" element={<AdminLayout />}>
