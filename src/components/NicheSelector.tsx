@@ -45,7 +45,7 @@ export function NicheSelector({ selected, onSelect }: NicheSelectorProps) {
   return (
     <Select value={selected} onValueChange={(v) => onSelect(v as Niche)}>
       <SelectTrigger className="w-full border-border bg-card font-display text-foreground sm:w-[260px]">
-        <SelectValue placeholder="Select a feature" />
+        <SelectValue placeholder="Select a niche" />
       </SelectTrigger>
       <SelectContent className="border-border bg-card max-h-[300px]">
         {niches.map((n) => (
