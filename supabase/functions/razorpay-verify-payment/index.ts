@@ -19,7 +19,9 @@ serve(async (req) => {
     if (!RAZORPAY_KEY_SECRET) throw new Error("Razorpay secret not configured");
 
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader) throw new Error("No authorization header");
+    if (!authHeader?.startsWith("Bearer ")) throw new Error("No authorization header");
+
+    const token = authHeader.replace("Bearer ", "");
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -27,8 +29,10 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error("Unauthorized");
+    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) throw new Error("Unauthorized");
+
+    const user = { id: claimsData.claims.sub as string };
 
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
 

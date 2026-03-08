@@ -21,7 +21,9 @@ serve(async (req) => {
 
     // Get user from auth header
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader) throw new Error("No authorization header");
+    if (!authHeader?.startsWith("Bearer ")) throw new Error("No authorization header");
+
+    const token = authHeader.replace("Bearer ", "");
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -29,8 +31,10 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error("Unauthorized");
+    const { data, error: claimsError } = await supabase.auth.getClaims(token);
+    if (claimsError || !data?.claims) throw new Error("Unauthorized");
+
+    const user = { id: data.claims.sub as string };
 
     const { amount, currency = "INR", plan_name, payment_type = "one_time" } = await req.json();
 
