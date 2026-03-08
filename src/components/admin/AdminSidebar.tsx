@@ -10,8 +10,9 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Sidebar,
   SidebarContent,
@@ -36,20 +37,25 @@ const navItems = [
 ];
 
 export function AdminSidebar() {
-  const { state } = useSidebar();
+  const { state, setOpenMobile } = useSidebar();
   const collapsed = state === "collapsed";
   const { signOut } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+  const isMobile = useIsMobile();
+
+  const handleNav = (url: string) => {
+    navigate(url);
+    if (isMobile) setOpenMobile(false);
+  };
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible={isMobile ? "offcanvas" : "icon"}>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-primary" />
-              {!collapsed && <span className="gradient-text font-bold">Admin Panel</span>}
+              <span className="gradient-text font-bold">Admin Panel</span>
             </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -62,9 +68,15 @@ export function AdminSidebar() {
                       end={item.url === "/admin"}
                       className="hover:bg-muted/50"
                       activeClassName="bg-primary/10 text-primary font-medium"
+                      onClick={(e) => {
+                        if (isMobile) {
+                          e.preventDefault();
+                          handleNav(item.url);
+                        }
+                      }}
                     >
                       <item.icon className="mr-2 h-4 w-4" />
-                      {!collapsed && <span>{item.title}</span>}
+                      {(!collapsed || isMobile) && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -78,10 +90,10 @@ export function AdminSidebar() {
           variant="ghost"
           size="sm"
           className="w-full justify-start text-muted-foreground"
-          onClick={() => navigate("/app")}
+          onClick={() => { navigate("/app"); if (isMobile) setOpenMobile(false); }}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {!collapsed && "Back to App"}
+          {(!collapsed || isMobile) && "Back to App"}
         </Button>
         <Button
           variant="ghost"
@@ -90,7 +102,7 @@ export function AdminSidebar() {
           onClick={signOut}
         >
           <LogOut className="mr-2 h-4 w-4" />
-          {!collapsed && "Sign Out"}
+          {(!collapsed || isMobile) && "Sign Out"}
         </Button>
       </SidebarFooter>
     </Sidebar>
