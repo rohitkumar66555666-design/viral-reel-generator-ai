@@ -25,17 +25,22 @@ const Index = () => {
   // Load profile preferences as defaults
   useEffect(() => {
     if (!user) return;
-    supabase
-      .from("profiles")
-      .select("preferred_platform, preferred_niche")
-      .eq("user_id", user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data) {
-          if (data.preferred_platform) setPlatform(data.preferred_platform as Platform);
-          if (data.preferred_niche) setNiche(data.preferred_niche as Niche);
-        }
-      });
+    const loadProfile = async () => {
+      const { data } = await supabase
+        .from("profiles")
+        .select("preferred_platform, preferred_niche")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (data) {
+        if (data.preferred_platform) setPlatform(data.preferred_platform as Platform);
+        if (data.preferred_niche) setNiche(data.preferred_niche as Niche);
+      } else {
+        // Auto-create profile for users who signed up before the trigger existed
+        await supabase.from("profiles").insert({ user_id: user.id, display_name: user.user_metadata?.full_name || "" });
+      }
+    };
+    loadProfile();
   }, [user]);
 
   const handleBookmark = async (idea: ReelIdea) => {
