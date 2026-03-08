@@ -23,9 +23,16 @@ const Index = () => {
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
-  const { user, signOut } = useAuth();
+  const { user, loading: authLoading, signOut } = useAuth();
   const { isAdmin } = useAdminRole();
   const navigate = useNavigate();
+
+  // Redirect non-logged-in users to landing page
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, authLoading, navigate]);
 
   // Load profile preferences as defaults
   useEffect(() => {
