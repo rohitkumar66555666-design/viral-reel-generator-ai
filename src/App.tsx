@@ -10,6 +10,13 @@ import AuthPage from "./pages/Auth";
 import SavedIdeas from "./pages/SavedIdeas";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import { AdminLayout } from "./components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminMessages from "./pages/admin/AdminMessages";
+import AdminFeedback from "./pages/admin/AdminFeedback";
+import AdminApiUsage from "./pages/admin/AdminApiUsage";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +33,14 @@ const App = () => (
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/saved" element={<SavedIdeas />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="messages" element={<AdminMessages />} />
+              <Route path="feedback" element={<AdminFeedback />} />
+              <Route path="api-usage" element={<AdminApiUsage />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
