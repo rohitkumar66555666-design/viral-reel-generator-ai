@@ -125,6 +125,90 @@ export type Database = {
         }
         Relationships: []
       }
+      hashtag_groups: {
+        Row: {
+          created_at: string
+          hashtags: string
+          id: string
+          is_active: boolean
+          name: string
+          niche: string
+        }
+        Insert: {
+          created_at?: string
+          hashtags?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          niche?: string
+        }
+        Update: {
+          created_at?: string
+          hashtags?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          niche?: string
+        }
+        Relationships: []
+      }
+      hook_templates: {
+        Row: {
+          category: string
+          created_at: string
+          engagement_score: number
+          hook_text: string
+          id: string
+          is_active: boolean
+          platform: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          engagement_score?: number
+          hook_text: string
+          id?: string
+          is_active?: boolean
+          platform?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          engagement_score?: number
+          hook_text?: string
+          id?: string
+          is_active?: boolean
+          platform?: string
+        }
+        Relationships: []
+      }
+      niches: {
+        Row: {
+          created_at: string
+          icon: string | null
+          id: string
+          is_active: boolean
+          name: string
+          usage_count: number
+        }
+        Insert: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          usage_count?: number
+        }
+        Update: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          usage_count?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -233,6 +317,63 @@ export type Database = {
         }
         Relationships: []
       }
+      subscription_plans: {
+        Row: {
+          created_at: string
+          daily_limit: number
+          features: string
+          id: string
+          is_active: boolean
+          name: string
+          price: number
+        }
+        Insert: {
+          created_at?: string
+          daily_limit?: number
+          features?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          price?: number
+        }
+        Update: {
+          created_at?: string
+          daily_limit?: number
+          features?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          price?: number
+        }
+        Relationships: []
+      }
+      trending_topics: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          platform: string
+          popularity_score: number
+          topic_name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          platform?: string
+          popularity_score?: number
+          topic_name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          platform?: string
+          popularity_score?: number
+          topic_name?: string
+        }
+        Relationships: []
+      }
       usage_logs: {
         Row: {
           created_at: string
@@ -300,6 +441,20 @@ export type Database = {
           date: string
         }[]
       }
+      admin_get_niche_stats: {
+        Args: never
+        Returns: {
+          count: number
+          niche: string
+        }[]
+      }
+      admin_get_platform_stats: {
+        Args: never
+        Returns: {
+          count: number
+          platform: string
+        }[]
+      }
       admin_get_recent_articles: {
         Args: { lim?: number }
         Returns: {
@@ -320,6 +475,13 @@ export type Database = {
       }
       admin_get_today_articles: { Args: never; Returns: number }
       admin_get_today_ideas: { Args: never; Returns: number }
+      admin_get_top_hooks: {
+        Args: never
+        Returns: {
+          count: number
+          hook: string
+        }[]
+      }
       admin_get_total_articles: { Args: never; Returns: number }
       admin_get_total_ideas: { Args: never; Returns: number }
       admin_get_total_users: { Args: never; Returns: number }

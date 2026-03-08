@@ -15,12 +15,17 @@ import ResetPassword from "./pages/ResetPassword";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
-import AdminArticles from "./pages/admin/AdminArticles";
-import AdminPromptTemplates from "./pages/admin/AdminPromptTemplates";
+import AdminReelIdeas from "./pages/admin/AdminReelIdeas";
+import AdminNiches from "./pages/admin/AdminNiches";
+import AdminHookTemplates from "./pages/admin/AdminHookTemplates";
+import AdminTrendingTopics from "./pages/admin/AdminTrendingTopics";
+import AdminHashtags from "./pages/admin/AdminHashtags";
 import AdminAIConfig from "./pages/admin/AdminAIConfig";
+import AdminPlans from "./pages/admin/AdminPlans";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminApiUsage from "./pages/admin/AdminApiUsage";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminFeedback from "./pages/admin/AdminFeedback";
-import AdminApiUsage from "./pages/admin/AdminApiUsage";
 import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
@@ -43,12 +48,17 @@ const App = () => (
               <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<AdminDashboard />} />
                 <Route path="users" element={<AdminUsers />} />
-                <Route path="articles" element={<AdminArticles />} />
-                <Route path="templates" element={<AdminPromptTemplates />} />
+                <Route path="reel-ideas" element={<AdminReelIdeas />} />
+                <Route path="niches" element={<AdminNiches />} />
+                <Route path="hooks" element={<AdminHookTemplates />} />
+                <Route path="trending" element={<AdminTrendingTopics />} />
+                <Route path="hashtags" element={<AdminHashtags />} />
                 <Route path="ai-config" element={<AdminAIConfig />} />
+                <Route path="plans" element={<AdminPlans />} />
+                <Route path="analytics" element={<AdminAnalytics />} />
+                <Route path="api-usage" element={<AdminApiUsage />} />
                 <Route path="messages" element={<AdminMessages />} />
                 <Route path="feedback" element={<AdminFeedback />} />
-                <Route path="api-usage" element={<AdminApiUsage />} />
                 <Route path="settings" element={<AdminSettings />} />
               </Route>
               <Route path="*" element={<NotFound />} />
