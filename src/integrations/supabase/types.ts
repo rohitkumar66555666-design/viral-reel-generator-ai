@@ -35,6 +35,42 @@ export type Database = {
         }
         Relationships: []
       }
+      articles: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          is_featured: boolean
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_featured?: boolean
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_featured?: boolean
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
@@ -125,6 +161,36 @@ export type Database = {
         }
         Relationships: []
       }
+      prompt_templates: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          prompt_instruction: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          prompt_instruction: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          prompt_instruction?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       saved_ideas: {
         Row: {
           caption: string
@@ -208,6 +274,25 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_get_articles_list: {
+        Args: never
+        Returns: {
+          category: string
+          created_at: string
+          id: string
+          is_featured: boolean
+          status: string
+          title: string
+          user_email: string
+        }[]
+      }
+      admin_get_daily_articles: {
+        Args: { days?: number }
+        Returns: {
+          count: number
+          date: string
+        }[]
+      }
       admin_get_daily_usage: {
         Args: { days?: number }
         Returns: {
@@ -215,7 +300,27 @@ export type Database = {
           date: string
         }[]
       }
+      admin_get_recent_articles: {
+        Args: { lim?: number }
+        Returns: {
+          category: string
+          created_at: string
+          id: string
+          title: string
+          user_email: string
+        }[]
+      }
+      admin_get_recent_users: {
+        Args: { lim?: number }
+        Returns: {
+          created_at: string
+          email: string
+          id: string
+        }[]
+      }
+      admin_get_today_articles: { Args: never; Returns: number }
       admin_get_today_ideas: { Args: never; Returns: number }
+      admin_get_total_articles: { Args: never; Returns: number }
       admin_get_total_ideas: { Args: never; Returns: number }
       admin_get_total_users: { Args: never; Returns: number }
       admin_get_users_list: {
