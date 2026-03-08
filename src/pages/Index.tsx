@@ -16,6 +16,7 @@ const FREE_DAILY_LIMIT = 5;
 const Index = () => {
   const [platform, setPlatform] = useState<Platform>("instagram");
   const [niche, setNiche] = useState<Niche>("motivation");
+  const [ideas, setIdeas] = useState<ReelIdea[]>([]);
   const [language, setLanguage] = useState<Language>("english");
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
