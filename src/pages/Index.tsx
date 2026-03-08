@@ -121,6 +121,9 @@ const Index = () => {
                 <Button variant="ghost" size="sm" onClick={() => navigate("/saved")} title="Saved ideas">
                   <Bookmark className="mr-1 h-4 w-4" /> Saved
                 </Button>
+                <Button variant="ghost" size="icon" onClick={() => navigate("/profile")} title="Profile">
+                  <User className="h-4 w-4" />
+                </Button>
                 <Button variant="ghost" size="icon" onClick={signOut} title="Sign out">
                   <LogOut className="h-4 w-4" />
                 </Button>
