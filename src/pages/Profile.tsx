@@ -34,6 +34,7 @@ export default function Profile() {
         setDisplayName(data.display_name || "");
         setPreferredPlatform(data.preferred_platform || "tiktok");
         setPreferredNiche(data.preferred_niche || "fitness");
+        setPreferredLanguage((data.preferred_language as Language) || "english");
       } else if (!error) {
         // Profile doesn't exist yet — create one
         await supabase.from("profiles").insert({ user_id: user.id });
