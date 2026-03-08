@@ -271,7 +271,7 @@ export default function Landing() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, amount: 0.05 }}
             className="mb-14 text-center"
           >
             <motion.p variants={fadeUp} custom={0} className="text-sm font-medium uppercase tracking-widest text-primary">
