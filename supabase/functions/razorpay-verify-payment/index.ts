@@ -29,10 +29,8 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
-    if (claimsError || !claimsData?.claims) throw new Error("Unauthorized");
-
-    const user = { id: claimsData.claims.sub as string };
+    const { data: { user }, error: userError } = await supabase.auth.getUser(token);
+    if (userError || !user) throw new Error("Unauthorized");
 
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
 

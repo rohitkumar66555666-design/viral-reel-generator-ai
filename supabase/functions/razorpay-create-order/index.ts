@@ -31,10 +31,8 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data, error: claimsError } = await supabase.auth.getClaims(token);
-    if (claimsError || !data?.claims) throw new Error("Unauthorized");
-
-    const user = { id: data.claims.sub as string };
+    const { data: { user }, error: userError } = await supabase.auth.getUser(token);
+    if (userError || !user) throw new Error("Unauthorized");
 
     const { amount, currency = "INR", plan_name, payment_type = "one_time" } = await req.json();
 
