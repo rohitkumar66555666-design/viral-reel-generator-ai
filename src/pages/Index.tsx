@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Zap, Loader2, LogOut, Bookmark, User } from "lucide-react";
+import { Sparkles, Zap, Loader2, LogOut, Bookmark, User, Shield } from "lucide-react";
 import { ContactFeedbackDialog } from "@/components/ContactFeedbackDialog";
+import { useAdminRole } from "@/hooks/useAdminRole";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
@@ -23,6 +24,7 @@ const Index = () => {
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
   const { user, signOut } = useAuth();
+  const { isAdmin } = useAdminRole();
   const navigate = useNavigate();
 
   // Load profile preferences as defaults
@@ -146,6 +148,11 @@ const Index = () => {
                 <Button variant="ghost" size="icon" onClick={() => navigate("/profile")} title="Profile">
                   <User className="h-4 w-4" />
                 </Button>
+                {isAdmin && (
+                  <Button variant="ghost" size="icon" onClick={() => navigate("/admin")} title="Admin Panel">
+                    <Shield className="h-4 w-4" />
+                  </Button>
+                )}
                 <ContactFeedbackDialog />
                 <Button variant="ghost" size="icon" onClick={signOut} title="Sign out">
                   <LogOut className="h-4 w-4" />
