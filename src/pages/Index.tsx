@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Zap, Loader2 } from "lucide-react";
+import { Sparkles, Zap, Loader2, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
 import { NicheSelector, type Niche } from "@/components/NicheSelector";
 import { IdeaCard, type ReelIdea } from "@/components/IdeaCard";
-import { getMockIdeas } from "@/lib/mock-ideas";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
+const FREE_DAILY_LIMIT = 5;
 
 const Index = () => {
   const [platform, setPlatform] = useState<Platform>("instagram");
@@ -13,15 +18,58 @@ const Index = () => {
   const [ideas, setIdeas] = useState<ReelIdea[]>([]);
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleGenerate = async () => {
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
+
+    // Check daily usage
+    const { data: usageCount, error: usageError } = await supabase.rpc("get_today_usage_count", {
+      p_user_id: user.id,
+    });
+
+    if (usageError) {
+      toast.error("Failed to check usage. Try again.");
+      return;
+    }
+
+    if ((usageCount ?? 0) >= FREE_DAILY_LIMIT) {
+      toast.error(`Daily limit reached (${FREE_DAILY_LIMIT} ideas/day). Upgrade to Pro for unlimited!`);
+      return;
+    }
+
     setLoading(true);
     setIdeas([]);
-    // Simulate AI generation delay
-    await new Promise((r) => setTimeout(r, 1500));
-    setIdeas(getMockIdeas(niche, platform));
-    setLoading(false);
-    setGenerated(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-ideas", {
+        body: { platform, niche },
+      });
+
+      if (error) {
+        throw new Error(error.message || "Failed to generate ideas");
+      }
+
+      if (data?.error) {
+        throw new Error(data.error);
+      }
+
+      const generatedIdeas: ReelIdea[] = data.ideas;
+      setIdeas(generatedIdeas);
+      setGenerated(true);
+
+      // Log usage
+      await supabase.from("usage_logs").insert({ user_id: user.id });
+    } catch (e) {
+      console.error(e);
+      toast.error(e instanceof Error ? e.message : "Failed to generate ideas");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,9 +85,26 @@ const Index = () => {
             </h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="hidden text-sm text-muted-foreground sm:block">5 free ideas/day</span>
-            <Button variant="outline" size="sm">Sign In</Button>
-            <Button variant="gradient" size="sm">Go Pro ✨</Button>
+            {user ? (
+              <>
+                <span className="hidden text-sm text-muted-foreground sm:block">
+                  {FREE_DAILY_LIMIT} free ideas/day
+                </span>
+                <Button variant="gradient" size="sm">Go Pro ✨</Button>
+                <Button variant="ghost" size="icon" onClick={signOut} title="Sign out">
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" onClick={() => navigate("/auth")}>
+                  Sign In
+                </Button>
+                <Button variant="gradient" size="sm" onClick={() => navigate("/auth")}>
+                  Get Started
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -87,7 +152,7 @@ const Index = () => {
               ) : (
                 <Sparkles className="h-4 w-4" />
               )}
-              {loading ? "Generating…" : "Generate Ideas"}
+              {loading ? "Generating…" : user ? "Generate Ideas" : "Sign In to Generate"}
             </Button>
           </div>
         </div>
@@ -103,7 +168,7 @@ const Index = () => {
               className="flex flex-col items-center gap-3 py-16"
             >
               <div className="h-12 w-12 animate-spin rounded-full border-4 border-muted border-t-primary" />
-              <p className="font-display text-muted-foreground">Crafting viral ideas…</p>
+              <p className="font-display text-muted-foreground">AI is crafting viral ideas…</p>
             </motion.div>
           )}
 
@@ -138,7 +203,9 @@ const Index = () => {
                 <Sparkles className="h-8 w-8 text-primary" />
               </div>
               <p className="font-display text-lg text-muted-foreground">
-                Select your platform & niche, then hit generate!
+                {user
+                  ? "Select your platform & niche, then hit generate!"
+                  : "Sign in to start generating viral reel ideas!"}
               </p>
             </motion.div>
           )}
