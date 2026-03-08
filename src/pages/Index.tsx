@@ -94,7 +94,7 @@ const Index = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-ideas", {
-        body: { platform, niche },
+        body: { platform, niche, language },
       });
 
       if (error) {
