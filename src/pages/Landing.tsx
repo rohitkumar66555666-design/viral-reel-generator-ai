@@ -291,7 +291,7 @@ export default function Landing() {
                 key={f.title}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true, amount: 0.05 }}
                 variants={scaleIn}
                 custom={i}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
