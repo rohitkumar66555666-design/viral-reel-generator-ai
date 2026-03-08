@@ -12,10 +12,10 @@ import {
   Star,
   Check,
   ArrowRight,
-  Instagram,
-  Youtube,
-  Facebook,
 } from "lucide-react";
+import instagramLogo from "@/assets/instagram-logo.png";
+import facebookLogo from "@/assets/facebook-logo.png";
+import youtubeLogo from "@/assets/youtube-logo.png";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 
