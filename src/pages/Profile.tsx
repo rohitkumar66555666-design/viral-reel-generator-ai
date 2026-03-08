@@ -144,6 +144,17 @@ export default function Profile() {
             <Save className="h-4 w-4" />
             {saving ? "Saving…" : "Save Profile"}
           </Button>
+
+          <div className="border-t border-border pt-4">
+            <Button
+              variant="outline"
+              className="w-full gap-2 text-destructive hover:bg-destructive/10 hover:text-destructive"
+              onClick={async () => { await signOut(); navigate("/"); }}
+            >
+              <LogOut className="h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </motion.div>
     </div>
