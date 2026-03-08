@@ -85,6 +85,7 @@ function CopyBtn({ text, label }: { text: string; label: string }) {
 interface IdeaCardProps {
   idea: ReelIdea;
   index: number;
+  niche?: string;
   isSaved?: boolean;
   onBookmark?: (idea: ReelIdea) => void;
   onRemove?: (idea: ReelIdea) => void;
