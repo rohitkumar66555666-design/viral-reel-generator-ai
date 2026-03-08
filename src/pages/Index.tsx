@@ -18,8 +18,35 @@ const Index = () => {
   const [ideas, setIdeas] = useState<ReelIdea[]>([]);
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
+  const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+
+  const handleBookmark = async (idea: ReelIdea) => {
+    if (!user) { navigate("/auth"); return; }
+    if (savedTitles.has(idea.title)) {
+      toast.info("Already saved!");
+      return;
+    }
+    const { error } = await supabase.from("saved_ideas").insert({
+      user_id: user.id,
+      title: idea.title,
+      hook: idea.hook,
+      script: idea.script,
+      caption: idea.caption,
+      hashtags: idea.hashtags,
+      viral_score: idea.viralScore,
+      platform,
+      niche,
+    });
+    if (error) {
+      toast.error("Failed to save idea");
+      console.error(error);
+    } else {
+      setSavedTitles((prev) => new Set(prev).add(idea.title));
+      toast.success("Idea saved! ⭐");
+    }
+  };
 
   const handleGenerate = async () => {
     if (!user) {
