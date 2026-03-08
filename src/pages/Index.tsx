@@ -35,9 +35,6 @@ const Index = () => {
       if (data) {
         if (data.preferred_platform) setPlatform(data.preferred_platform as Platform);
         if (data.preferred_niche) setNiche(data.preferred_niche as Niche);
-      } else {
-        // Auto-create profile for users who signed up before the trigger existed
-        await supabase.from("profiles").insert({ user_id: user.id, display_name: user.user_metadata?.full_name || "" });
       }
     };
     loadProfile();
