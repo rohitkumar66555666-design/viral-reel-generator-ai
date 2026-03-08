@@ -25,7 +25,7 @@ export default function AuthPage() {
         toast.error(error.message);
       } else {
         toast.success("Welcome back!");
-        navigate("/");
+        navigate("/app");
       }
     } else {
       const { error } = await supabase.auth.signUp({
@@ -108,7 +108,7 @@ export default function AuthPage() {
           className="w-full gap-2"
           onClick={async () => {
             const { error } = await lovable.auth.signInWithOAuth("google", {
-              redirect_uri: window.location.origin,
+              redirect_uri: `${window.location.origin}/app`,
             });
             if (error) toast.error(error.message);
           }}
