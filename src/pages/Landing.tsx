@@ -261,32 +261,20 @@ export default function Landing() {
       {/* ── Features ── */}
       <ParallaxSection id="features" className="border-t border-border py-20 sm:py-28" speed={0.2}>
         <div className="container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.05 }}
-            className="mb-14 text-center"
-          >
-            <motion.p variants={fadeUp} custom={0} className="text-sm font-medium uppercase tracking-widest text-primary">
-              Features
-            </motion.p>
-            <motion.h2 variants={fadeUp} custom={1} className="mt-3 font-display text-3xl font-bold sm:text-4xl">
+          <div className="mb-14 text-center">
+            <p className="text-sm font-medium uppercase tracking-widest text-primary">Features</p>
+            <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">
               Everything You Need to Go <span className="gradient-text">Viral</span>
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="mx-auto mt-4 max-w-xl text-muted-foreground">
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
               Powerful AI tools designed for content creators who want to grow faster on social media.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((f, i) => (
+            {features.map((f) => (
               <motion.div
                 key={f.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.05 }}
-                variants={scaleIn}
-                custom={i}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
                 className="card-gradient rounded-xl border border-border p-6 transition-colors hover:border-primary/30 hover:glow-shadow"
               >
@@ -307,45 +295,27 @@ export default function Landing() {
       {/* ── How It Works ── */}
       <ParallaxSection className="border-t border-border py-20 sm:py-28" speed={0.15}>
         <div className="container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mb-14 text-center"
-          >
-            <motion.p variants={fadeUp} custom={0} className="text-sm font-medium uppercase tracking-widest text-primary">
-              How It Works
-            </motion.p>
-            <motion.h2 variants={fadeUp} custom={1} className="mt-3 font-display text-3xl font-bold sm:text-4xl">
+          <div className="mb-14 text-center">
+            <p className="text-sm font-medium uppercase tracking-widest text-primary">How It Works</p>
+            <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">
               Three Steps to <span className="gradient-text">Viral Content</span>
-            </motion.h2>
-          </motion.div>
+            </h2>
+          </div>
 
           <div className="mx-auto grid max-w-3xl gap-8 sm:grid-cols-3">
             {[
               { step: "01", title: "Pick Your Niche", desc: "Choose from 25 niches like fitness, finance, comedy, and more." },
               { step: "02", title: "Generate Ideas", desc: "AI creates 10 viral reel ideas with scripts, hooks & hashtags." },
               { step: "03", title: "Create & Post", desc: "Copy the content, create your reel, and watch it go viral." },
-            ].map((s, i) => (
+            ].map((s) => (
               <motion.div
                 key={s.step}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                 className="text-center"
               >
-                <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  whileInView={{ scale: 1, rotate: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 + 0.2, duration: 0.5, type: "spring", stiffness: 200 }}
-                  className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent font-display text-xl font-bold text-primary-foreground"
-                >
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent font-display text-xl font-bold text-primary-foreground">
                   {s.step}
-                </motion.div>
+                </div>
                 <h3 className="font-display text-lg font-semibold">{s.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
               </motion.div>
@@ -357,51 +327,25 @@ export default function Landing() {
       {/* ── Testimonials ── */}
       <ParallaxSection id="testimonials" className="border-t border-border py-20 sm:py-28" speed={0.1}>
         <div className="container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mb-14 text-center"
-          >
-            <motion.p variants={fadeUp} custom={0} className="text-sm font-medium uppercase tracking-widest text-primary">
-              Testimonials
-            </motion.p>
-            <motion.h2 variants={fadeUp} custom={1} className="mt-3 font-display text-3xl font-bold sm:text-4xl">
+          <div className="mb-14 text-center">
+            <p className="text-sm font-medium uppercase tracking-widest text-primary">Testimonials</p>
+            <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">
               Loved by <span className="gradient-text">Creators</span>
-            </motion.h2>
-          </motion.div>
+            </h2>
+          </div>
 
           <div className="grid gap-6 sm:grid-cols-3">
-            {testimonials.map((t, i) => (
+            {testimonials.map((t) => (
               <motion.div
                 key={t.name}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
                 className="card-gradient rounded-xl border border-border p-6 transition-colors hover:border-primary/20"
               >
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 + 0.3 }}
-                  className="mb-3 flex gap-1"
-                >
+                <div className="mb-3 flex gap-1">
                   {[...Array(5)].map((_, j) => (
-                    <motion.div
-                      key={j}
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1 + j * 0.05 + 0.3, type: "spring", stiffness: 300 }}
-                    >
-                      <Star className="h-4 w-4 fill-primary text-primary" />
-                    </motion.div>
+                    <Star key={j} className="h-4 w-4 fill-primary text-primary" />
                   ))}
-                </motion.div>
+                </div>
                 <p className="text-sm leading-relaxed text-foreground/80">"{t.text}"</p>
                 <div className="mt-4 flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent font-display text-sm font-bold text-primary-foreground">
@@ -421,36 +365,21 @@ export default function Landing() {
       {/* ── Pricing ── */}
       <ParallaxSection id="pricing" className="border-t border-border py-20 sm:py-28" speed={0.12}>
         <div className="container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mb-14 text-center"
-          >
-            <motion.p variants={fadeUp} custom={0} className="text-sm font-medium uppercase tracking-widest text-primary">
-              Pricing
-            </motion.p>
-            <motion.h2 variants={fadeUp} custom={1} className="mt-3 font-display text-3xl font-bold sm:text-4xl">
+          <div className="mb-14 text-center">
+            <p className="text-sm font-medium uppercase tracking-widest text-primary">Pricing</p>
+            <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">
               Simple, <span className="gradient-text">Transparent</span> Pricing
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="mx-auto mt-4 max-w-lg text-muted-foreground">
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
               Start free. Upgrade when you're ready to supercharge your content.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-3">
-            {pricingPlans.map((plan, i) => (
+            {pricingPlans.map((plan) => (
               <motion.div
                 key={plan.name}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={scaleIn}
-                custom={i}
-                whileHover={{
-                  y: -8,
-                  transition: { duration: 0.25 },
-                }}
+                whileHover={{ y: -8, transition: { duration: 0.25 } }}
                 className={`relative rounded-xl border p-6 ${
                   plan.popular
                     ? "border-primary glow-shadow card-gradient"
@@ -458,43 +387,22 @@ export default function Landing() {
                 }`}
               >
                 {plan.popular && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3, type: "spring" }}
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-primary to-accent px-4 py-1 text-xs font-bold text-primary-foreground"
-                  >
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-primary to-accent px-4 py-1 text-xs font-bold text-primary-foreground">
                     Most Popular
-                  </motion.div>
+                  </div>
                 )}
                 <h3 className="font-display text-lg font-semibold">{plan.name}</h3>
                 <div className="mt-3 flex items-baseline gap-1">
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 + 0.2, type: "spring", stiffness: 200 }}
-                    className="font-display text-4xl font-bold"
-                  >
-                    {plan.price}
-                  </motion.span>
+                  <span className="font-display text-4xl font-bold">{plan.price}</span>
                   <span className="text-sm text-muted-foreground">{plan.period}</span>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground">{plan.desc}</p>
                 <ul className="mt-6 space-y-3">
-                  {plan.features.map((f, fi) => (
-                    <motion.li
-                      key={f}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: fi * 0.05 + i * 0.1 + 0.3 }}
-                      className="flex items-start gap-2 text-sm"
-                    >
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm">
                       <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span className="text-foreground/80">{f}</span>
-                    </motion.li>
+                    </li>
                   ))}
                 </ul>
                 <Button
@@ -512,37 +420,26 @@ export default function Landing() {
 
       {/* ── Final CTA ── */}
       <section className="relative border-t border-border py-20 sm:py-28 overflow-hidden">
-        {/* Floating glow */}
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/8 blur-[100px]"
         />
         <div className="container relative text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-3xl font-bold sm:text-4xl">
-              Ready to Go <span className="gradient-text">Viral</span>?
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Join thousands of creators using AI to generate scroll-stopping content every day.
-            </motion.p>
-            <motion.div
-              variants={fadeUp}
-              custom={2}
-              className="mt-8"
-            >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                <Button variant="gradient" size="lg" onClick={handleCTA} className="animate-pulse-glow px-8 text-base">
-                  <Sparkles className="mr-2 h-5 w-5" />
-                  Start Generating — It's Free
-                </Button>
-              </motion.div>
+          <h2 className="font-display text-3xl font-bold sm:text-4xl">
+            Ready to Go <span className="gradient-text">Viral</span>?
+          </h2>
+          <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
+            Join thousands of creators using AI to generate scroll-stopping content every day.
+          </p>
+          <div className="mt-8">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+              <Button variant="gradient" size="lg" onClick={handleCTA} className="animate-pulse-glow px-8 text-base">
+                <Sparkles className="mr-2 h-5 w-5" />
+                Start Generating — It's Free
+              </Button>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
