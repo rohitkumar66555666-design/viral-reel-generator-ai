@@ -3,8 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Download } from "lucide-react";
 import { format } from "date-fns";
+import { downloadCSV } from "@/lib/csv-export";
 
 interface UserRow {
   id: string;
