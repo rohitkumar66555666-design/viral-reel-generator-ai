@@ -33,7 +33,7 @@ export function PlatformSelector({ selected, onSelect }: PlatformSelectorProps) 
               : "border border-border bg-card hover:border-primary/40"
           )}
         >
-          <span className="text-lg">{p.icon}</span>
+          <img src={p.logo} alt={p.label} className="h-5 w-5 object-contain" />
           <span className={selected === p.id ? "gradient-text" : "text-foreground"}>
             {p.label}
           </span>
