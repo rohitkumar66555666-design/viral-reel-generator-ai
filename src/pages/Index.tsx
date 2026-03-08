@@ -9,6 +9,7 @@ import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
 import { NicheSelector, type Niche } from "@/components/NicheSelector";
 import { LanguageSelector, type Language } from "@/components/LanguageSelector";
 import { IdeaCard, type ReelIdea } from "@/components/IdeaCard";
+import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -23,6 +24,7 @@ const Index = () => {
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
+  const [showUpgrade, setShowUpgrade] = useState(false);
   const { user, loading: authLoading, signOut } = useAuth();
   const { isAdmin } = useAdminRole();
   const navigate = useNavigate();
@@ -96,7 +98,7 @@ const Index = () => {
     }
 
     if ((usageCount ?? 0) >= FREE_DAILY_LIMIT) {
-      toast.error(`Daily limit reached (${FREE_DAILY_LIMIT} ideas/day). Upgrade to Pro for unlimited!`);
+      setShowUpgrade(true);
       return;
     }
 
@@ -289,6 +291,8 @@ const Index = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        <UpgradeDialog open={showUpgrade} onOpenChange={setShowUpgrade} />
       </main>
     </div>
   );
