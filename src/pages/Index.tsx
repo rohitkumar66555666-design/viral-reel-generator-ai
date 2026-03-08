@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Zap, Loader2, LogOut, Bookmark } from "lucide-react";
+import { Sparkles, Zap, Loader2, LogOut, Bookmark, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
@@ -120,6 +120,9 @@ const Index = () => {
                 <Button variant="gradient" size="sm">Go Pro ✨</Button>
                 <Button variant="ghost" size="sm" onClick={() => navigate("/saved")} title="Saved ideas">
                   <Bookmark className="mr-1 h-4 w-4" /> Saved
+                </Button>
+                <Button variant="ghost" size="icon" onClick={() => navigate("/profile")} title="Profile">
+                  <User className="h-4 w-4" />
                 </Button>
                 <Button variant="ghost" size="icon" onClick={signOut} title="Sign out">
                   <LogOut className="h-4 w-4" />
