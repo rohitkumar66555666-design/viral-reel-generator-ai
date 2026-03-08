@@ -12,10 +12,10 @@ import {
   Star,
   Check,
   ArrowRight,
-  Instagram,
-  Youtube,
-  Facebook,
 } from "lucide-react";
+import instagramLogo from "@/assets/instagram-logo.png";
+import facebookLogo from "@/assets/facebook-logo.png";
+import youtubeLogo from "@/assets/youtube-logo.png";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -240,17 +240,17 @@ export default function Landing() {
               className="flex flex-wrap items-center justify-center gap-3 sm:gap-4"
             >
               {[
-                { icon: Instagram, label: "Instagram", color: "text-accent" },
-                { icon: Youtube, label: "YouTube", color: "text-destructive" },
-                { icon: Facebook, label: "Facebook", color: "text-primary" },
+                { logo: instagramLogo, label: "Instagram Reels" },
+                { logo: facebookLogo, label: "Facebook Reels" },
+                { logo: youtubeLogo, label: "YouTube Shorts" },
               ].map((p) => (
                 <motion.div
                   key={p.label}
                   variants={staggerItem}
                   whileHover={{ scale: 1.05, y: -2 }}
-                  className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-sm transition-colors hover:bg-muted/80"
+                  className="flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-sm transition-colors hover:bg-muted/80"
                 >
-                  <p.icon className={`h-4 w-4 ${p.color}`} /> {p.label}
+                  <img src={p.logo} alt={p.label} className="h-5 w-5 object-contain" /> {p.label}
                 </motion.div>
               ))}
             </motion.div>
