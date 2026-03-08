@@ -190,7 +190,7 @@ const Index = () => {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
             <div className="flex-1">
               <label className="mb-2 block font-display text-sm font-medium text-muted-foreground">
-                Niche
+                Feature
               </label>
               <NicheSelector selected={niche} onSelect={setNiche} />
             </div>
