@@ -115,7 +115,7 @@ export default function Landing() {
   const handleCTA = () => navigate(user ? "/app" : "/auth");
 
   return (
-    <div className="relative min-h-screen bg-background overflow-x-hidden dark">
+    <div className="relative min-h-screen bg-background overflow-x-hidden">
       {/* ── Nav ── */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
