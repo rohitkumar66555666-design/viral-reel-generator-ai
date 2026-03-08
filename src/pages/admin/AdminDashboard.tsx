@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { StatCard } from "@/components/admin/StatCard";
-import { Users, Activity, TrendingUp, Zap } from "lucide-react";
+import { Users, Activity, TrendingUp, Zap, Download } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { Button } from "@/components/ui/button";
+import { downloadCSV } from "@/lib/csv-export";
+import { format } from "date-fns";
 
 export default function AdminDashboard() {
   const [totalUsers, setTotalUsers] = useState(0);
