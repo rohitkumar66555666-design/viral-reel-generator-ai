@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2 } from "lucide-react";
+import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ProtectedVideoPlayer } from "@/components/ProtectedVideoPlayer";
 import { toast } from "sonner";
 
 export interface ReelIdea {
@@ -62,6 +63,8 @@ interface IdeaCardProps {
 }
 
 export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCardProps) {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -99,6 +102,27 @@ export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCar
             </Button>
           )}
         </div>
+      </div>
+
+      {/* Video Reference Toggle */}
+      <div className="mb-3">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setShowVideo(!showVideo)}
+          className="gap-1 text-xs text-primary hover:text-primary/80"
+        >
+          <Video className="h-3 w-3" />
+          {showVideo ? "Hide Reference Clip" : "View Reference Clip"}
+        </Button>
+        {showVideo && (
+          <div className="mt-2">
+            <ProtectedVideoPlayer
+              src="/videos/demo-reference.mp4"
+              watermarkText="PREVIEW ONLY"
+            />
+          </div>
+        )}
       </div>
 
       <div className="mb-3 rounded-lg bg-muted/50 p-3">
