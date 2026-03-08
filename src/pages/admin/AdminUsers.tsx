@@ -73,8 +73,8 @@ export default function AdminUsers() {
           onClick={() =>
             downloadCSV(
               `users-${format(new Date(), "yyyy-MM-dd")}.csv`,
-              ["Email", "Joined", "Articles Generated"],
-              users.map((u) => [u.email, format(new Date(u.created_at), "yyyy-MM-dd"), u.ideas_count])
+          ["Email", "Joined", "Reels Ideas Generated"],
+          users.map((u) => [u.email, format(new Date(u.created_at), "yyyy-MM-dd"), u.ideas_count])
             )
           }
           disabled={users.length === 0}
@@ -102,7 +102,7 @@ export default function AdminUsers() {
               <TableHead>Email</TableHead>
               <TableHead>Joined</TableHead>
               <TableHead>Plan</TableHead>
-              <TableHead className="text-right">Articles</TableHead>
+              <TableHead className="text-right">Reels Ideas</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -163,7 +163,7 @@ export default function AdminUsers() {
                   <p className="text-sm">{format(new Date(selectedUser.created_at), "PPP")}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Articles Generated</p>
+                  <p className="text-xs text-muted-foreground">Reels Ideas Generated</p>
                   <p className="text-sm font-medium">{selectedUser.ideas_count}</p>
                 </div>
               </div>
