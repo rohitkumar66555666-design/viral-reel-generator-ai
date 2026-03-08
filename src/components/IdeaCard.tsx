@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2, Video } from "lucide-react";
+import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProtectedVideoPlayer } from "@/components/ProtectedVideoPlayer";
 import { toast } from "sonner";
 
 export interface ReelIdea {
@@ -14,34 +13,6 @@ export interface ReelIdea {
   hashtags: string;
   viralScore: number;
 }
-
-const nicheVideoMap: Record<string, string> = {
-  motivation: "/videos/niche-motivation.mp4",
-  finance: "/videos/niche-finance.mp4",
-  education: "/videos/niche-education.mp4",
-  fitness: "/videos/niche-fitness.mp4",
-  comedy: "/videos/niche-comedy.mp4",
-  travel: "/videos/niche-travel.mp4",
-  technology: "/videos/niche-technology.mp4",
-  beauty: "/videos/niche-beauty.mp4",
-  food: "/videos/niche-food.mp4",
-  health: "/videos/niche-health.mp4",
-  gaming: "/videos/niche-gaming.mp4",
-  music: "/videos/niche-music.mp4",
-  fashion: "/videos/niche-fashion.mp4",
-  sports: "/videos/niche-sports.mp4",
-  pets: "/videos/niche-pets.mp4",
-  diy: "/videos/niche-diy.mp4",
-  parenting: "/videos/niche-parenting.mp4",
-  business: "/videos/niche-business.mp4",
-  science: "/videos/niche-science.mp4",
-  art: "/videos/niche-art.mp4",
-  relationships: "/videos/niche-relationships.mp4",
-  productivity: "/videos/niche-productivity.mp4",
-  mindset: "/videos/niche-mindset.mp4",
-  realestate: "/videos/niche-realestate.mp4",
-  crypto: "/videos/niche-crypto.mp4",
-};
 
 function ViralScoreBadge({ score }: { score: number }) {
   const color =
@@ -85,16 +56,12 @@ function CopyBtn({ text, label }: { text: string; label: string }) {
 interface IdeaCardProps {
   idea: ReelIdea;
   index: number;
-  niche?: string;
   isSaved?: boolean;
   onBookmark?: (idea: ReelIdea) => void;
   onRemove?: (idea: ReelIdea) => void;
 }
 
-export function IdeaCard({ idea, index, niche, isSaved, onBookmark, onRemove }: IdeaCardProps) {
-  const [showVideo, setShowVideo] = useState(false);
-  const videoSrc = niche ? (nicheVideoMap[niche] || "/videos/niche-motivation.mp4") : "/videos/niche-motivation.mp4";
-
+export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -132,27 +99,6 @@ export function IdeaCard({ idea, index, niche, isSaved, onBookmark, onRemove }: 
             </Button>
           )}
         </div>
-      </div>
-
-      {/* Video Reference Toggle */}
-      <div className="mb-3">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setShowVideo(!showVideo)}
-          className="gap-1 text-xs text-primary hover:text-primary/80"
-        >
-          <Video className="h-3 w-3" />
-          {showVideo ? "Hide Reference Clip" : "View Reference Clip"}
-        </Button>
-        {showVideo && (
-          <div className="mt-2">
-            <ProtectedVideoPlayer
-              src={videoSrc}
-              watermarkText="PREVIEW ONLY"
-            />
-          </div>
-        )}
       </div>
 
       <div className="mb-3 rounded-lg bg-muted/50 p-3">
