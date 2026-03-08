@@ -91,8 +91,9 @@ interface IdeaCardProps {
   onRemove?: (idea: ReelIdea) => void;
 }
 
-export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCardProps) {
+export function IdeaCard({ idea, index, niche, isSaved, onBookmark, onRemove }: IdeaCardProps) {
   const [showVideo, setShowVideo] = useState(false);
+  const videoSrc = niche ? (nicheVideoMap[niche] || "/videos/niche-motivation.mp4") : "/videos/niche-motivation.mp4";
 
   return (
     <motion.div
