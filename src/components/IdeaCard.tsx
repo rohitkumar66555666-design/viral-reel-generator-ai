@@ -104,6 +104,27 @@ export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCar
         </div>
       </div>
 
+      {/* Video Reference Toggle */}
+      <div className="mb-3">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setShowVideo(!showVideo)}
+          className="gap-1 text-xs text-primary hover:text-primary/80"
+        >
+          <Video className="h-3 w-3" />
+          {showVideo ? "Hide Reference Clip" : "View Reference Clip"}
+        </Button>
+        {showVideo && (
+          <div className="mt-2">
+            <ProtectedVideoPlayer
+              src="/videos/demo-reference.mp4"
+              watermarkText="PREVIEW ONLY"
+            />
+          </div>
+        )}
+      </div>
+
       <div className="mb-3 rounded-lg bg-muted/50 p-3">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary">🎣 Hook (First 3s)</p>
         <p className="mt-1 text-sm text-foreground">{idea.hook}</p>
