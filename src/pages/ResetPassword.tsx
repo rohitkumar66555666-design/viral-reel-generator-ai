@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Lock, Zap, CheckCircle } from "lucide-react";
+import { Lock, Zap, CheckCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -12,14 +12,33 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [authReady, setAuthReady] = useState(false);
   const [isRecovery, setIsRecovery] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Listen for the PASSWORD_RECOVERY event from the URL hash
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+    // Wait for session to be fully restored first
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setAuthReady(true);
+        setIsRecovery(true);
+      }
+    });
+
+    // Listen for the PASSWORD_RECOVERY event
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "PASSWORD_RECOVERY") {
         setIsRecovery(true);
+        setAuthReady(true);
+      }
+      // Also handle SIGNED_IN which happens after recovery link is processed
+      if (event === "SIGNED_IN" && session) {
+        setAuthReady(true);
+        // Check if this came from a recovery flow
+        const hash = window.location.hash;
+        if (hash.includes("type=recovery")) {
+          setIsRecovery(true);
+        }
       }
     });
 
@@ -29,7 +48,15 @@ export default function ResetPassword() {
       setIsRecovery(true);
     }
 
-    return () => subscription.unsubscribe();
+    // Set a timeout to stop waiting after 5 seconds
+    const timeout = setTimeout(() => {
+      setAuthReady(true);
+    }, 5000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const handleReset = async (e: React.FormEvent) => {
@@ -40,6 +67,14 @@ export default function ResetPassword() {
     }
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    // Verify we have a session before attempting update
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      toast.error("Session expired. Please request a new password reset link.");
+      setTimeout(() => navigate("/auth"), 2000);
       return;
     }
 
@@ -54,6 +89,17 @@ export default function ResetPassword() {
     }
     setLoading(false);
   };
+
+  if (!authReady) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-muted-foreground">Verifying your reset link…</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
