@@ -121,7 +121,7 @@ const Index = () => {
       return;
     }
 
-    if ((usageCount ?? 0) >= FREE_DAILY_LIMIT) {
+    if ((usageCount ?? 0) >= dailyLimit) {
       setShowUpgrade(true);
       return;
     }
