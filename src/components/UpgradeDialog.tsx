@@ -1,7 +1,17 @@
+import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Check, Crown, Rocket, Zap } from "lucide-react";
+import { Check, Crown, Rocket, Zap, Loader2 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 const proPlans = [
   {
@@ -36,10 +46,105 @@ const proPlans = [
 interface UpgradeDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onUpgradeSuccess?: () => void;
 }
 
-export function UpgradeDialog({ open, onOpenChange }: UpgradeDialogProps) {
+export function UpgradeDialog({ open, onOpenChange, onUpgradeSuccess }: UpgradeDialogProps) {
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<string | null>(null);
+
+  const loadRazorpay = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async (planId: string, amount: number) => {
+    if (!user) {
+      onOpenChange(false);
+      navigate("/auth");
+      return;
+    }
+
+    setLoading(planId);
+
+    try {
+      const loaded = await loadRazorpay();
+      if (!loaded) {
+        toast.error("Failed to load payment gateway");
+        setLoading(null);
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
+        body: {
+          amount: amount * 100,
+          currency: "INR",
+          plan_name: planId,
+          payment_type: "subscription",
+        },
+      });
+
+      if (error || data?.error) {
+        throw new Error(data?.error || error?.message || "Failed to create order");
+      }
+
+      const options = {
+        key: data.key_id,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Viral Reels AI",
+        description: `${planId.charAt(0).toUpperCase() + planId.slice(1)} Plan - Monthly`,
+        order_id: data.order_id,
+        handler: async (response: any) => {
+          try {
+            const { data: verifyData, error: verifyError } = await supabase.functions.invoke("razorpay-verify-payment", {
+              body: {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              },
+            });
+
+            if (verifyError || verifyData?.error) {
+              throw new Error(verifyData?.error || "Verification failed");
+            }
+
+            toast.success("Payment successful! Your plan has been upgraded. 🎉");
+            onOpenChange(false);
+            onUpgradeSuccess?.();
+          } catch (err) {
+            toast.error("Payment verification failed. Contact support.");
+            console.error(err);
+          }
+        },
+        prefill: { email: user.email },
+        theme: { color: "#00b3b3" },
+        modal: { ondismiss: () => setLoading(null) },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", (response: any) => {
+        toast.error(`Payment failed: ${response.error.description}`);
+        setLoading(null);
+      });
+      rzp.open();
+    } catch (err) {
+      console.error("Payment error:", err);
+      toast.error(err instanceof Error ? err.message : "Payment failed");
+    } finally {
+      setLoading(null);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -89,12 +194,13 @@ export function UpgradeDialog({ open, onOpenChange }: UpgradeDialogProps) {
                 variant={plan.highlight ? "gradient" : "outline"}
                 size="sm"
                 className="w-full"
-                onClick={() => {
-                  onOpenChange(false);
-                  navigate("/pricing");
-                }}
+                disabled={loading === plan.id}
+                onClick={() => handlePayment(plan.id, plan.price)}
               >
-                Get {plan.name}
+                {loading === plan.id ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : null}
+                {loading === plan.id ? "Processing…" : `Get ${plan.name}`}
               </Button>
             </div>
           ))}

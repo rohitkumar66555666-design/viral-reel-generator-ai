@@ -14,7 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const FREE_DAILY_LIMIT = 5;
+const DEFAULT_FREE_LIMIT = 5;
 
 const Index = () => {
   const [platform, setPlatform] = useState<Platform>("instagram");
@@ -25,9 +25,33 @@ const Index = () => {
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [dailyLimit, setDailyLimit] = useState(DEFAULT_FREE_LIMIT);
+  const [planName, setPlanName] = useState("Free");
   const { user, loading: authLoading, signOut } = useAuth();
   const { isAdmin } = useAdminRole();
   const navigate = useNavigate();
+
+  // Load user subscription to get actual daily limit
+  useEffect(() => {
+    if (!user) return;
+    const loadSubscription = async () => {
+      const { data } = await supabase
+        .from("user_subscriptions")
+        .select("daily_limit, plan_name, status, expires_at")
+        .eq("user_id", user.id)
+        .eq("status", "active")
+        .maybeSingle();
+
+      if (data && data.expires_at && new Date(data.expires_at) > new Date()) {
+        setDailyLimit(data.daily_limit);
+        setPlanName(data.plan_name);
+      } else {
+        setDailyLimit(DEFAULT_FREE_LIMIT);
+        setPlanName("Free");
+      }
+    };
+    loadSubscription();
+  }, [user]);
 
   // Redirect non-logged-in users to landing page
   useEffect(() => {
@@ -97,7 +121,7 @@ const Index = () => {
       return;
     }
 
-    if ((usageCount ?? 0) >= FREE_DAILY_LIMIT) {
+    if ((usageCount ?? 0) >= dailyLimit) {
       setShowUpgrade(true);
       return;
     }
@@ -148,7 +172,7 @@ const Index = () => {
             {user ? (
               <>
                 <span className="hidden text-sm text-muted-foreground sm:block">
-                  {FREE_DAILY_LIMIT} free ideas/day
+                  {dailyLimit} {planName === "Free" ? "free" : planName} ideas/day
                 </span>
                 <Button variant="gradient" size="sm">Go Pro ✨</Button>
                 <Button variant="ghost" size="sm" onClick={() => navigate("/saved")} title="Saved ideas">
@@ -292,7 +316,27 @@ const Index = () => {
           )}
         </AnimatePresence>
 
-        <UpgradeDialog open={showUpgrade} onOpenChange={setShowUpgrade} />
+        <UpgradeDialog
+          open={showUpgrade}
+          onOpenChange={setShowUpgrade}
+          onUpgradeSuccess={() => {
+            // Reload subscription limits
+            if (user) {
+              supabase
+                .from("user_subscriptions")
+                .select("daily_limit, plan_name, status, expires_at")
+                .eq("user_id", user.id)
+                .eq("status", "active")
+                .maybeSingle()
+                .then(({ data }) => {
+                  if (data && data.expires_at && new Date(data.expires_at) > new Date()) {
+                    setDailyLimit(data.daily_limit);
+                    setPlanName(data.plan_name);
+                  }
+                });
+            }
+          }}
+        />
       </main>
     </div>
   );
