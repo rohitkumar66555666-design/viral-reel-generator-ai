@@ -155,3 +155,7 @@
     background: var(--gradient-card);
   }
 }
+
+#lovable-badge {
+  display: none !important;
+}
