@@ -172,7 +172,7 @@ const Index = () => {
             {user ? (
               <>
                 <span className="hidden text-sm text-muted-foreground sm:block">
-                  {FREE_DAILY_LIMIT} free ideas/day
+                  {dailyLimit} {planName === "Free" ? "free" : planName} ideas/day
                 </span>
                 <Button variant="gradient" size="sm">Go Pro ✨</Button>
                 <Button variant="ghost" size="sm" onClick={() => navigate("/saved")} title="Saved ideas">
