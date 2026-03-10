@@ -111,19 +111,22 @@ const Index = () => {
       return;
     }
 
-    // Check daily usage
-    const { data: usageCount, error: usageError } = await supabase.rpc("get_today_usage_count", {
-      p_user_id: user.id,
-    });
+    // Admins have unlimited generation
+    if (!isAdmin) {
+      // Check daily usage
+      const { data: usageCount, error: usageError } = await supabase.rpc("get_today_usage_count", {
+        p_user_id: user.id,
+      });
 
-    if (usageError) {
-      toast.error("Failed to check usage. Try again.");
-      return;
-    }
+      if (usageError) {
+        toast.error("Failed to check usage. Try again.");
+        return;
+      }
 
-    if ((usageCount ?? 0) >= dailyLimit) {
-      setShowUpgrade(true);
-      return;
+      if ((usageCount ?? 0) >= dailyLimit) {
+        setShowUpgrade(true);
+        return;
+      }
     }
 
     setLoading(true);
