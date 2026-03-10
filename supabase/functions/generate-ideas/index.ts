@@ -20,19 +20,19 @@ serve(async (req) => {
       ? `IMPORTANT: Write ALL titles, hooks, scripts, captions, and hashtags in ${language}. Only the JSON keys should remain in English.`
       : "";
 
-    const systemPrompt = `You are a viral content strategist. Generate exactly 10 viral reel ideas for ${platform} in the ${niche} niche.
+    const systemPrompt = `You are a viral content strategist and professional scriptwriter. Generate exactly 10 viral reel ideas for ${platform} in the ${niche} niche.
 ${langInstruction}
 
 Return ONLY a valid JSON array (no markdown, no code blocks) with exactly 10 objects. Each object must have:
 - "id": number (1-10)
 - "title": string (catchy title)
-- "hook": string (compelling first 3 seconds hook)
-- "script": string (short script outline, 2-4 sentences)
-- "caption": string (engaging caption with 1-2 emojis)
-- "hashtags": string (7-10 relevant hashtags with # prefix)
+- "hook": string (compelling first 3 seconds hook — write the EXACT words to say, with tone/delivery cues in parentheses like (whispering), (excited), (shocked face))
+- "script": string (a FULL detailed script, NOT a summary. Include every line of dialogue, stage directions in [brackets] like [cut to close-up], [pause for effect], [laughing], [background music drops], facial expressions like [smirk], [shocked face], sound effects like [record scratch], transitions like [quick zoom in], timing cues like [hold 2 seconds]. For comedy: include punchlines, comedic pauses [beat], audience reactions. For educational: include on-screen text cues [TEXT ON SCREEN: "..."], visual demonstrations. Make it 8-15 lines minimum so creators can directly film from this script.)
+- "caption": string (engaging caption with 2-3 emojis, a call-to-action, and a question to boost comments)
+- "hashtags": string (10-12 relevant hashtags with # prefix, mix trending + niche-specific)
 - "viralScore": number (70-98, your estimated viral potential)
 
-Make ideas specific, trending, and actionable. Vary the viral scores realistically.`;
+Make ideas specific, trending, and actionable. Vary the viral scores realistically. The script must be PRODUCTION-READY — a creator should be able to pick it up and film immediately without any additional planning.`;
 
     const response = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
