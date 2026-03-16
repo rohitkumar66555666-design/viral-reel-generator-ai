@@ -77,6 +77,30 @@ export function UpgradeDialog({ open, onOpenChange, onUpgradeSuccess }: UpgradeD
 
     setLoading(planId);
 
+    // Free plan — activate directly without payment
+    if (amount === 0) {
+      try {
+        const { error } = await supabase.from("user_subscriptions").upsert({
+          user_id: user.id,
+          plan_name: planId,
+          daily_limit: 15,
+          status: "active",
+          starts_at: new Date().toISOString(),
+          expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        }, { onConflict: "user_id" });
+        if (error) throw error;
+        toast.success("Starter plan activated! 🎉");
+        onOpenChange(false);
+        onUpgradeSuccess?.();
+      } catch (err) {
+        toast.error("Failed to activate plan");
+        console.error(err);
+      } finally {
+        setLoading(null);
+      }
+      return;
+    }
+
     try {
       const loaded = await loadRazorpay();
       if (!loaded) {
