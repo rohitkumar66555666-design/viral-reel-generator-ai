@@ -17,7 +17,7 @@ const proPlans = [
   {
     id: "starter",
     name: "Starter",
-    price: 299,
+    price: 0,
     period: "/month",
     icon: Zap,
     highlight: false,
