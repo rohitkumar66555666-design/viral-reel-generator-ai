@@ -98,6 +98,29 @@ export default function Pricing() {
 
     setLoading(planId);
 
+    // Free plan — activate directly
+    if (amount === 0) {
+      try {
+        const { error } = await supabase.from("user_subscriptions").upsert({
+          user_id: user.id,
+          plan_name: planId,
+          daily_limit: 15,
+          status: "active",
+          starts_at: new Date().toISOString(),
+          expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        }, { onConflict: "user_id" });
+        if (error) throw error;
+        toast.success("Starter plan activated! 🎉");
+        navigate("/app");
+      } catch (err) {
+        toast.error("Failed to activate plan");
+        console.error(err);
+      } finally {
+        setLoading(null);
+      }
+      return;
+    }
+
     try {
       const loaded = await loadRazorpay();
       if (!loaded) {
@@ -106,10 +129,9 @@ export default function Pricing() {
         return;
       }
 
-      // Create order via edge function
       const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
         body: {
-          amount: amount * 100, // Convert to paise
+          amount: amount * 100,
           currency: "INR",
           plan_name: planId,
           payment_type: type,
@@ -148,15 +170,9 @@ export default function Pricing() {
             console.error(err);
           }
         },
-        prefill: {
-          email: user.email,
-        },
-        theme: {
-          color: "#00b3b3",
-        },
-        modal: {
-          ondismiss: () => setLoading(null),
-        },
+        prefill: { email: user.email },
+        theme: { color: "#00b3b3" },
+        modal: { ondismiss: () => setLoading(null) },
       };
 
       const rzp = new window.Razorpay(options);
