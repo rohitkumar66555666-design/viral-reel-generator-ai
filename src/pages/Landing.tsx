@@ -92,9 +92,9 @@ const testimonials = [
 ];
 
 const pricingPlans = [
-  { name: "Free", price: "$0", period: "forever", desc: "Perfect for getting started", features: ["5 idea generations per day", "All 25 niches", "3 platforms supported", "Copy scripts & captions", "Basic hashtag suggestions"], cta: "Get Started Free", popular: false },
-  { name: "Pro", price: "$9", period: "/month", desc: "For serious content creators", features: ["Unlimited generations", "All 25 niches", "Priority AI processing", "Save unlimited ideas", "Advanced viral analytics", "Multi-language support", "Export to CSV"], cta: "Go Pro ✨", popular: true },
-  { name: "Agency", price: "$29", period: "/month", desc: "For teams & agencies", features: ["Everything in Pro", "5 team members", "Brand voice presets", "Bulk generation (50 at once)", "API access", "Priority support", "White-label exports"], cta: "Start Agency Plan", popular: false },
+  { name: "Free", price: "₹0", period: "forever", desc: "Perfect for getting started", features: ["5 idea generations per day", "All 25 niches", "3 platforms supported", "Copy scripts & captions", "Basic hashtag suggestions"], cta: "Get Started Free", popular: false },
+  { name: "Pro", price: "₹99", period: "/month", desc: "For serious content creators", features: ["Unlimited generations", "All 25 niches", "Priority AI processing", "Save unlimited ideas", "Advanced viral analytics", "Multi-language support", "Export to CSV"], cta: "Go Pro ✨", popular: true },
+  { name: "Agency", price: "₹189", period: "/month", desc: "For teams & agencies", features: ["Everything in Pro", "5 team members", "Brand voice presets", "Bulk generation (50 at once)", "API access", "Priority support", "White-label exports"], cta: "Start Agency Plan", popular: false },
 ];
 
 /* ── component ── */
