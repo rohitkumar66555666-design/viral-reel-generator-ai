@@ -322,21 +322,23 @@ const Index = () => {
         <UpgradeDialog
           open={showUpgrade}
           onOpenChange={setShowUpgrade}
-          onUpgradeSuccess={() => {
-            // Reload subscription limits
+          onUpgradeSuccess={async () => {
+            // Reload subscription limits after successful payment
             if (user) {
-              supabase
+              const { data } = await supabase
                 .from("user_subscriptions")
                 .select("daily_limit, plan_name, status, expires_at")
                 .eq("user_id", user.id)
                 .eq("status", "active")
-                .maybeSingle()
-                .then(({ data }) => {
-                  if (data && data.expires_at && new Date(data.expires_at) > new Date()) {
-                    setDailyLimit(data.daily_limit);
-                    setPlanName(data.plan_name);
-                  }
-                });
+                .maybeSingle();
+
+              if (data && data.expires_at && new Date(data.expires_at) > new Date()) {
+                setDailyLimit(data.daily_limit);
+                setPlanName(data.plan_name);
+                toast.success(`You're now on the ${data.plan_name} plan! Generate away! 🚀`);
+                // Auto-generate after upgrade
+                handleGenerate();
+              }
             }
           }}
         />
