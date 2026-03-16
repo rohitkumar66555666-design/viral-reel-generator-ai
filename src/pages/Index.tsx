@@ -164,7 +164,7 @@ const Index = () => {
       {/* Header */}
       <header className="border-b border-border">
         <div className="container flex items-center justify-between py-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
             <Zap className="h-6 w-6 text-primary" />
             <h1 className="font-display text-xl font-bold">
               <span className="gradient-text">Viral Reel</span>{" "}
