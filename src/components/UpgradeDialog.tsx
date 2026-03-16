@@ -35,7 +35,7 @@ const proPlans = [
   {
     id: "unlimited",
     name: "Unlimited",
-    price: 1499,
+    price: 189,
     period: "/month",
     icon: Rocket,
     highlight: false,
