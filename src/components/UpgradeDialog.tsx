@@ -17,7 +17,7 @@ const proPlans = [
   {
     id: "starter",
     name: "Starter",
-    price: 299,
+    price: 0,
     period: "/month",
     icon: Zap,
     highlight: false,
@@ -26,7 +26,7 @@ const proPlans = [
   {
     id: "pro",
     name: "Pro",
-    price: 699,
+    price: 99,
     period: "/month",
     icon: Crown,
     highlight: true,
@@ -35,7 +35,7 @@ const proPlans = [
   {
     id: "unlimited",
     name: "Unlimited",
-    price: 1499,
+    price: 189,
     period: "/month",
     icon: Rocket,
     highlight: false,
@@ -76,6 +76,30 @@ export function UpgradeDialog({ open, onOpenChange, onUpgradeSuccess }: UpgradeD
     }
 
     setLoading(planId);
+
+    // Free plan — activate directly without payment
+    if (amount === 0) {
+      try {
+        const { error } = await supabase.from("user_subscriptions").upsert({
+          user_id: user.id,
+          plan_name: planId,
+          daily_limit: 15,
+          status: "active",
+          starts_at: new Date().toISOString(),
+          expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        }, { onConflict: "user_id" });
+        if (error) throw error;
+        toast.success("Starter plan activated! 🎉");
+        onOpenChange(false);
+        onUpgradeSuccess?.();
+      } catch (err) {
+        toast.error("Failed to activate plan");
+        console.error(err);
+      } finally {
+        setLoading(null);
+      }
+      return;
+    }
 
     try {
       const loaded = await loadRazorpay();
@@ -179,8 +203,8 @@ export function UpgradeDialog({ open, onOpenChange, onUpgradeSuccess }: UpgradeD
                 <span className="font-display font-semibold">{plan.name}</span>
               </div>
               <div className="mb-3">
-                <span className="text-2xl font-bold">₹{plan.price}</span>
-                <span className="text-sm text-muted-foreground">{plan.period}</span>
+                <span className="text-2xl font-bold">{plan.price === 0 ? "Free" : `₹${plan.price}`}</span>
+                {plan.price > 0 && <span className="text-sm text-muted-foreground">{plan.period}</span>}
               </div>
               <ul className="mb-4 space-y-1.5">
                 {plan.features.map((f) => (
