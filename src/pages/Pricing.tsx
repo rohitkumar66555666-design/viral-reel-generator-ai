@@ -15,67 +15,47 @@ declare global {
 
 const plans = [
   {
-    id: "free",
-    name: "Free",
+    id: "starter",
+    name: "Starter",
     price: 0,
     period: "",
     icon: Star,
     features: [
-      "5 reel ideas per day",
-      "All niches",
-      "Basic hooks & captions",
-      "Community support",
-    ],
-    cta: "Current Plan",
-    disabled: true,
-    popular: false,
-  },
-  {
-    id: "starter",
-    name: "Starter",
-    price: 299,
-    period: "/month",
-    icon: Zap,
-    features: [
       "15 reel ideas per day",
       "All niches & platforms",
       "Advanced hooks & scripts",
-      "Hashtag suggestions",
-      "Email support",
+      "Basic hashtag suggestions",
     ],
-    cta: "Get Starter",
+    cta: "Get Started Free",
     disabled: false,
     popular: false,
   },
   {
     id: "pro",
     name: "Pro",
-    price: 699,
+    price: 99,
     period: "/month",
     icon: Crown,
     features: [
       "50 reel ideas per day",
-      "All niches & platforms",
-      "Premium hooks & scripts",
-      "Trending topic alerts",
+      "Priority AI generation",
+      "Viral score analytics",
       "Priority support",
       "Export to CSV",
     ],
-    cta: "Get Pro",
+    cta: "Go Pro ✨",
     disabled: false,
     popular: true,
   },
   {
     id: "unlimited",
     name: "Unlimited",
-    price: 1499,
+    price: 189,
     period: "/month",
     icon: Rocket,
     features: [
-      "Unlimited reel ideas",
-      "All niches & platforms",
-      "AI-powered viral scoring",
-      "Custom prompt templates",
+      "Unlimited ideas per day",
+      "All Pro features",
       "API access",
       "Dedicated support",
     ],
@@ -118,6 +98,29 @@ export default function Pricing() {
 
     setLoading(planId);
 
+    // Free plan — activate directly
+    if (amount === 0) {
+      try {
+        const { error } = await supabase.from("user_subscriptions").upsert({
+          user_id: user.id,
+          plan_name: planId,
+          daily_limit: 15,
+          status: "active",
+          starts_at: new Date().toISOString(),
+          expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        }, { onConflict: "user_id" });
+        if (error) throw error;
+        toast.success("Starter plan activated! 🎉");
+        navigate("/app");
+      } catch (err) {
+        toast.error("Failed to activate plan");
+        console.error(err);
+      } finally {
+        setLoading(null);
+      }
+      return;
+    }
+
     try {
       const loaded = await loadRazorpay();
       if (!loaded) {
@@ -126,10 +129,9 @@ export default function Pricing() {
         return;
       }
 
-      // Create order via edge function
       const { data, error } = await supabase.functions.invoke("razorpay-create-order", {
         body: {
-          amount: amount * 100, // Convert to paise
+          amount: amount * 100,
           currency: "INR",
           plan_name: planId,
           payment_type: type,
@@ -168,15 +170,9 @@ export default function Pricing() {
             console.error(err);
           }
         },
-        prefill: {
-          email: user.email,
-        },
-        theme: {
-          color: "#00b3b3",
-        },
-        modal: {
-          ondismiss: () => setLoading(null),
-        },
+        prefill: { email: user.email },
+        theme: { color: "#00b3b3" },
+        modal: { ondismiss: () => setLoading(null) },
       };
 
       const rzp = new window.Razorpay(options);
@@ -226,7 +222,7 @@ export default function Pricing() {
         </motion.div>
 
         {/* Plans Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-20">
+        <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto mb-20">
           {plans.map((plan, i) => (
             <motion.div
               key={plan.id}
