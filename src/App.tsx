@@ -31,6 +31,42 @@ import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
+const AppRoutes = () => {
+  // Track visitor on every page navigation
+  const { useVisitorTracking } = require("@/hooks/useVisitorTracking");
+  useVisitorTracking();
+  
+  return (
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/app" element={<Index />} />
+      <Route path="/auth" element={<AuthPage />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/saved" element={<SavedIdeas />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="reel-ideas" element={<AdminReelIdeas />} />
+        <Route path="niches" element={<AdminNiches />} />
+        <Route path="hooks" element={<AdminHookTemplates />} />
+        <Route path="trending" element={<AdminTrendingTopics />} />
+        <Route path="hashtags" element={<AdminHashtags />} />
+        <Route path="ai-config" element={<AdminAIConfig />} />
+        <Route path="plans" element={<AdminPlans />} />
+        <Route path="analytics" element={<AdminAnalytics />} />
+        <Route path="api-usage" element={<AdminApiUsage />} />
+        <Route path="messages" element={<AdminMessages />} />
+        <Route path="feedback" element={<AdminFeedback />} />
+        <Route path="settings" element={<AdminSettings />} />
+        <Route path="visitors" element={<AdminVisitors />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
@@ -39,32 +75,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/app" element={<Index />} />
-              <Route path="/auth" element={<AuthPage />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/saved" element={<SavedIdeas />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<AdminDashboard />} />
-                <Route path="users" element={<AdminUsers />} />
-                <Route path="reel-ideas" element={<AdminReelIdeas />} />
-                <Route path="niches" element={<AdminNiches />} />
-                <Route path="hooks" element={<AdminHookTemplates />} />
-                <Route path="trending" element={<AdminTrendingTopics />} />
-                <Route path="hashtags" element={<AdminHashtags />} />
-                <Route path="ai-config" element={<AdminAIConfig />} />
-                <Route path="plans" element={<AdminPlans />} />
-                <Route path="analytics" element={<AdminAnalytics />} />
-                <Route path="api-usage" element={<AdminApiUsage />} />
-                <Route path="messages" element={<AdminMessages />} />
-                <Route path="feedback" element={<AdminFeedback />} />
-                <Route path="settings" element={<AdminSettings />} />
-              </Route>
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AppRoutes />
           </BrowserRouter>
         </AuthProvider>
       </TooltipProvider>
