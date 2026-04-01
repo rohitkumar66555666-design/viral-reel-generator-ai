@@ -62,7 +62,7 @@ interface IdeaCardProps {
   onCreateVideo?: (idea: ReelIdea) => void;
 }
 
-export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCardProps) {
+export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove, onCreateVideo }: IdeaCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
