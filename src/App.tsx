@@ -32,8 +32,8 @@ import AdminSettings from "./pages/admin/AdminSettings";
 const queryClient = new QueryClient();
 
 const AppRoutes = () => {
-  // Track visitor on every page navigation
-  const { useVisitorTracking } = require("@/hooks/useVisitorTracking");
+  useVisitorTracking();
+  
   useVisitorTracking();
   
   return (
