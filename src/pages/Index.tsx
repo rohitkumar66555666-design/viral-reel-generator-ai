@@ -26,6 +26,8 @@ const Index = () => {
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [showVideoGen, setShowVideoGen] = useState(false);
+  const [videoIdea, setVideoIdea] = useState<ReelIdea | null>(null);
   const [dailyLimit, setDailyLimit] = useState(DEFAULT_FREE_LIMIT);
   const [planName, setPlanName] = useState("Free");
   const { user, loading: authLoading, signOut } = useAuth();
