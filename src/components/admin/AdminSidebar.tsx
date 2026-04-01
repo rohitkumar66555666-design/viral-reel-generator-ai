@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  Eye,
   Users,
   Lightbulb,
   MessageSquare,
@@ -46,6 +47,7 @@ const navItems = [
   { title: "AI Settings", url: "/admin/ai-config", icon: Cpu },
   { title: "Plans & Credits", url: "/admin/plans", icon: CreditCard },
   { title: "Analytics", url: "/admin/analytics", icon: PieChart },
+  { title: "Visitors", url: "/admin/visitors", icon: Eye },
   { title: "API Usage", url: "/admin/api-usage", icon: Activity },
   { title: "Messages", url: "/admin/messages", icon: MessageSquare },
   { title: "Feedback", url: "/admin/feedback", icon: Star },

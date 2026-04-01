@@ -209,6 +209,57 @@ export type Database = {
         }
         Relationships: []
       }
+      page_visits: {
+        Row: {
+          browser: string | null
+          created_at: string
+          device_type: string | null
+          id: string
+          page_path: string
+          referrer_url: string | null
+          screen_width: number | null
+          session_id: string | null
+          traffic_source: string
+          user_agent: string | null
+          user_id: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          browser?: string | null
+          created_at?: string
+          device_type?: string | null
+          id?: string
+          page_path?: string
+          referrer_url?: string | null
+          screen_width?: number | null
+          session_id?: string | null
+          traffic_source?: string
+          user_agent?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          browser?: string | null
+          created_at?: string
+          device_type?: string | null
+          id?: string
+          page_path?: string
+          referrer_url?: string | null
+          screen_width?: number | null
+          session_id?: string | null
+          traffic_source?: string
+          user_agent?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -559,6 +610,7 @@ export type Database = {
       }
       admin_get_today_articles: { Args: never; Returns: number }
       admin_get_today_ideas: { Args: never; Returns: number }
+      admin_get_today_visitors: { Args: never; Returns: number }
       admin_get_top_hooks: {
         Args: never
         Returns: {
@@ -566,9 +618,25 @@ export type Database = {
           hook: string
         }[]
       }
+      admin_get_top_pages: {
+        Args: { period?: string }
+        Returns: {
+          page: string
+          visit_count: number
+        }[]
+      }
       admin_get_total_articles: { Args: never; Returns: number }
       admin_get_total_ideas: { Args: never; Returns: number }
       admin_get_total_users: { Args: never; Returns: number }
+      admin_get_total_visitors: { Args: never; Returns: number }
+      admin_get_traffic_sources: {
+        Args: { period?: string }
+        Returns: {
+          percentage: number
+          source: string
+          visit_count: number
+        }[]
+      }
       admin_get_users_list: {
         Args: never
         Returns: {
@@ -576,6 +644,14 @@ export type Database = {
           email: string
           id: string
           ideas_count: number
+        }[]
+      }
+      admin_get_visitor_stats: {
+        Args: { period?: string }
+        Returns: {
+          label: string
+          unique_sessions: number
+          visit_count: number
         }[]
       }
       get_today_usage_count: { Args: { p_user_id: string }; Returns: number }
