@@ -28,12 +28,12 @@ import AdminApiUsage from "./pages/admin/AdminApiUsage";
 import AdminMessages from "./pages/admin/AdminMessages";
 import AdminFeedback from "./pages/admin/AdminFeedback";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminVisitors from "./pages/admin/AdminVisitors";
+import { useVisitorTracking } from "./hooks/useVisitorTracking";
 
 const queryClient = new QueryClient();
 
 const AppRoutes = () => {
-  useVisitorTracking();
-  
   useVisitorTracking();
   
   return (
