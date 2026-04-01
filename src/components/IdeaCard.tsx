@@ -59,6 +59,7 @@ interface IdeaCardProps {
   isSaved?: boolean;
   onBookmark?: (idea: ReelIdea) => void;
   onRemove?: (idea: ReelIdea) => void;
+  onCreateVideo?: (idea: ReelIdea) => void;
 }
 
 export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCardProps) {
