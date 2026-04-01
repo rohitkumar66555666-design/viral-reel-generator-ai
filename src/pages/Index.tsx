@@ -297,6 +297,10 @@ const Index = () => {
                     index={i}
                     isSaved={savedTitles.has(idea.title)}
                     onBookmark={handleBookmark}
+                    onCreateVideo={(idea) => {
+                      setVideoIdea(idea);
+                      setShowVideoGen(true);
+                    }}
                   />
                 ))}
               </div>
