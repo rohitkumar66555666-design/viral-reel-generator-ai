@@ -327,6 +327,14 @@ const Index = () => {
         </AnimatePresence>
 
         <UpgradeDialog
+        <VideoGeneratorDialog
+          open={showVideoGen}
+          onOpenChange={setShowVideoGen}
+          idea={videoIdea}
+          platform={platform}
+        />
+
+        <UpgradeDialog
           open={showUpgrade}
           onOpenChange={setShowUpgrade}
           onUpgradeSuccess={async () => {
