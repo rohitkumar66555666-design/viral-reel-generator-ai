@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2 } from "lucide-react";
+import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
