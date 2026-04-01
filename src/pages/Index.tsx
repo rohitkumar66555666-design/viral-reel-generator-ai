@@ -9,6 +9,7 @@ import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
 import { NicheSelector, type Niche } from "@/components/NicheSelector";
 import { LanguageSelector, type Language } from "@/components/LanguageSelector";
 import { IdeaCard, type ReelIdea } from "@/components/IdeaCard";
+import { VideoGeneratorDialog } from "@/components/VideoGeneratorDialog";
 import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,6 +26,8 @@ const Index = () => {
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [showVideoGen, setShowVideoGen] = useState(false);
+  const [videoIdea, setVideoIdea] = useState<ReelIdea | null>(null);
   const [dailyLimit, setDailyLimit] = useState(DEFAULT_FREE_LIMIT);
   const [planName, setPlanName] = useState("Free");
   const { user, loading: authLoading, signOut } = useAuth();
@@ -294,6 +297,10 @@ const Index = () => {
                     index={i}
                     isSaved={savedTitles.has(idea.title)}
                     onBookmark={handleBookmark}
+                    onCreateVideo={(idea) => {
+                      setVideoIdea(idea);
+                      setShowVideoGen(true);
+                    }}
                   />
                 ))}
               </div>
@@ -318,6 +325,13 @@ const Index = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        <VideoGeneratorDialog
+          open={showVideoGen}
+          onOpenChange={setShowVideoGen}
+          idea={videoIdea}
+          platform={platform}
+        />
 
         <UpgradeDialog
           open={showUpgrade}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2 } from "lucide-react";
+import { Copy, Check, Zap, Bookmark, BookmarkCheck, Trash2, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -59,9 +59,10 @@ interface IdeaCardProps {
   isSaved?: boolean;
   onBookmark?: (idea: ReelIdea) => void;
   onRemove?: (idea: ReelIdea) => void;
+  onCreateVideo?: (idea: ReelIdea) => void;
 }
 
-export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCardProps) {
+export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove, onCreateVideo }: IdeaCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -121,10 +122,21 @@ export function IdeaCard({ idea, index, isSaved, onBookmark, onRemove }: IdeaCar
         <p className="mt-1 text-sm text-primary/80">{idea.hashtags}</p>
       </div>
 
-      <div className="flex flex-wrap gap-1 border-t border-border pt-3">
+      <div className="flex flex-wrap items-center gap-1 border-t border-border pt-3">
         <CopyBtn text={idea.script} label="Script" />
         <CopyBtn text={idea.caption} label="Caption" />
         <CopyBtn text={idea.hashtags} label="Hashtags" />
+        {onCreateVideo && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onCreateVideo(idea)}
+            className="ml-auto gap-1 text-xs text-primary hover:bg-primary/10"
+          >
+            <Video className="h-3 w-3" />
+            Create Video
+          </Button>
+        )}
       </div>
     </motion.div>
   );
