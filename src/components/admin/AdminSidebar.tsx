@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  Eye,
   Users,
   Lightbulb,
   MessageSquare,
