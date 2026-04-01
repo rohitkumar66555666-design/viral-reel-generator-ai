@@ -326,7 +326,6 @@ const Index = () => {
           )}
         </AnimatePresence>
 
-        <UpgradeDialog
         <VideoGeneratorDialog
           open={showVideoGen}
           onOpenChange={setShowVideoGen}
