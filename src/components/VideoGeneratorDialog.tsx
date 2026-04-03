@@ -364,7 +364,7 @@ function renderFrame(
     ctx.translate(-CANVAS_WIDTH / 2, -CANVAS_HEIGHT / 2);
 
     // Character at top center
-    drawCharacter(ctx, frame, 290, ["✍️", "📝", "💬", "📢"], CANVAS_WIDTH / 2, 320);
+    drawCharacter(ctx, frame, 290, ["✍️", "📝", "💬", "📢"], CANVAS_WIDTH / 2, 320, 80);
 
     // "CAPTION" label
     ctx.font = `bold 36px "Arial", sans-serif`;
