@@ -574,7 +574,7 @@ export function VideoGeneratorDialog({ open, onOpenChange, idea, platform }: Vid
 
       if (voiceEnabled && "speechSynthesis" in window) {
         audioCtx = new AudioContext();
-        audioDestination = audioCtx.createMediaStreamAudioDestination();
+        audioDestination = audioCtx.createMediaStreamDestination();
 
         // Merge audio track into video stream
         audioDestination.stream.getAudioTracks().forEach((track) => {
