@@ -152,8 +152,10 @@ const Index = () => {
       setIdeas(generatedIdeas);
       setGenerated(true);
 
-      // Log usage
-      await supabase.from("usage_logs").insert({ user_id: user.id });
+      // Log usage (skip for admins)
+      if (!isAdmin) {
+        await supabase.from("usage_logs").insert({ user_id: user.id });
+      }
     } catch (e) {
       console.error(e);
       toast.error(e instanceof Error ? e.message : "Failed to generate ideas");
