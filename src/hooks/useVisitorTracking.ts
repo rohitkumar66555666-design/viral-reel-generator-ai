@@ -60,10 +60,20 @@ function getBrowser(): string {
 
 export function useVisitorTracking() {
   const location = useLocation();
+  const { user } = useAuth();
 
   useEffect(() => {
     const trackVisit = async () => {
       try {
+        // Skip tracking for admin users
+        if (user) {
+          const { data } = await supabase.rpc("has_role", {
+            _user_id: user.id,
+            _role: "admin",
+          });
+          if (data === true) return;
+        }
+
         const params = new URLSearchParams(window.location.search);
         const utmSource = params.get("utm_source");
         const utmMedium = params.get("utm_medium");
@@ -86,11 +96,10 @@ export function useVisitorTracking() {
           session_id: getSessionId(),
         });
       } catch (e) {
-        // Silent fail - don't disrupt UX for analytics
         console.debug("Visit tracking failed:", e);
       }
     };
 
     trackVisit();
-  }, [location.pathname]);
+  }, [location.pathname, user]);
 }
