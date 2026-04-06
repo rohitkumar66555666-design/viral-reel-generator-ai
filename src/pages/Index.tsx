@@ -182,7 +182,7 @@ const Index = () => {
                 <span className="hidden text-sm text-muted-foreground sm:block">
                   {dailyLimit} {planName === "Free" ? "free" : planName} ideas/day
                 </span>
-                <Button variant="gradient" size="sm">Go Pro ✨</Button>
+                <Button variant="gradient" size="sm" onClick={() => setShowUpgrade(true)}>Go Pro ✨</Button>
                 <Button variant="ghost" size="sm" onClick={() => navigate("/saved")} title="Saved ideas">
                   <Bookmark className="mr-1 h-4 w-4" /> Saved
                 </Button>
