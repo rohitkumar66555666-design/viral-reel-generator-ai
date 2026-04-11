@@ -53,7 +53,7 @@ export default function AdminUsers() {
   useEffect(() => { loadUsers(); }, []);
 
   const filtered = users.filter((u) =>
-    u.email.toLowerCase().includes(search.toLowerCase())
+    (u.email || "").toLowerCase().includes(search.toLowerCase())
   );
 
   if (loading) {
@@ -110,7 +110,7 @@ export default function AdminUsers() {
           <TableBody>
             {filtered.map((u) => (
               <TableRow key={u.id} className="border-border">
-                <TableCell className="font-medium">{u.email}</TableCell>
+                <TableCell className="font-medium">{u.email || "No email"}</TableCell>
                 <TableCell className="text-muted-foreground">
                   {format(new Date(u.created_at), "MMM d, yyyy")}
                 </TableCell>
