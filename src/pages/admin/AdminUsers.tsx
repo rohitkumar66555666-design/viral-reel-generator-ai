@@ -53,7 +53,7 @@ export default function AdminUsers() {
   useEffect(() => { loadUsers(); }, []);
 
   const filtered = users.filter((u) =>
-    u.email.toLowerCase().includes(search.toLowerCase())
+    (u.email || "").toLowerCase().includes(search.toLowerCase())
   );
 
   if (loading) {
