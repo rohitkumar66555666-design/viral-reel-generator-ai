@@ -238,7 +238,7 @@ const Index = () => {
             <PlatformSelector selected={platform} onSelect={setPlatform} />
           </div>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+          <div className="flex flex-col gap-4 sm:flex-row">
             <div className="flex-1">
               <label className="mb-2 block font-display text-sm font-medium text-muted-foreground">
                 Niche
@@ -251,21 +251,29 @@ const Index = () => {
               </label>
               <LanguageSelector selected={language} onSelect={setLanguage} />
             </div>
-            <Button
-              variant="gradient"
-              size="lg"
-              onClick={handleGenerate}
-              disabled={loading}
-              className="animate-pulse-glow sm:w-auto"
-            >
-              {loading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Sparkles className="h-4 w-4" />
-              )}
-              {loading ? "Generating…" : user ? "Generate Ideas" : "Sign In to Generate"}
-            </Button>
           </div>
+
+          <div>
+            <label className="mb-2 block font-display text-sm font-medium text-muted-foreground">
+              Hook Style
+            </label>
+            <HookStyleSelector selected={hookStyle} onSelect={setHookStyle} />
+          </div>
+
+          <Button
+            variant="gradient"
+            size="lg"
+            onClick={handleGenerate}
+            disabled={loading}
+            className="animate-pulse-glow w-full sm:w-auto"
+          >
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Sparkles className="h-4 w-4" />
+            )}
+            {loading ? "Generating…" : user ? "Generate Ideas" : "Sign In to Generate"}
+          </Button>
         </div>
 
         {/* Results */}
