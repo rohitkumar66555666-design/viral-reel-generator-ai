@@ -46,9 +46,38 @@ serve(async (req) => {
     const hookSpec = hookStyleMap[hookStyle] ?? hookStyleMap.curiosity;
     const hookStyleInstruction = `\n\nHOOK STYLE — ${hookSpec.label.toUpperCase()} (NON-NEGOTIABLE):\n${hookSpec.rule}\nALL 10 hooks must follow this exact style. Vary the wording, but never break the pattern.`;
 
+    const platformRulesMap: Record<string, { label: string; rule: string }> = {
+      instagram: {
+        label: "Instagram Reels",
+        rule: `INSTAGRAM REELS OUTPUT RULES (NON-NEGOTIABLE):
+- "caption": Write an AESTHETIC, lifestyle-forward caption (2-4 short lines). Use poetic line breaks, soft tone, lowercase where it feels natural, and 2-3 tasteful emojis (✨🤍🌿💫🪞). End with a soft CTA or open-ended question. NO sales-y language.
+- "hashtags": Output EXACTLY 3 to 5 hashtags, separated by " · " (space-dot-space), NOT spaces or new lines. Mix one broad community tag, one aesthetic tag, and one niche tag. Example format: "#aesthetic · #softlife · #morningroutine"
+- "script": Optimize for 15-30 second vertical reel with smooth, beautiful B-roll cues and trending Reels audio reference in the opening scene direction.`,
+      },
+      tiktok: {
+        label: "TikTok",
+        rule: `TIKTOK OUTPUT RULES (NON-NEGOTIABLE):
+- "hook": Must be PUNCHY, fast, and Gen-Z native — under 8 words when possible, written for a 1-second pattern interrupt.
+- "script": MUST start the first line with a [TRENDING AUDIO SUGGESTION: "<specific song/sound name + artist or creator>"] tag (e.g. [TRENDING AUDIO SUGGESTION: "Murder On The Dancefloor — Sophie Ellis-Bextor (sped up)"]). Pick a real, plausible trending TikTok sound that matches the niche. Then follow with the rest of the directorial script. Use jump cuts, text-on-screen overlays, and 15-30s pacing.
+- "caption": Short, punchy, 1-2 lines max. Conversational, slang-friendly, with 1-2 emojis and a hook for comments.
+- "hashtags": Output EXACTLY 5 to 8 hashtags, space-separated. MUST include #fyp, #foryou or #foryoupage (at least one), plus #viral or #tiktokviral, mixed with niche tags. Example: "#fyp #foryoupage #viral <niche tags>"`,
+      },
+      youtube: {
+        label: "YouTube Shorts",
+        rule: `YOUTUBE SHORTS OUTPUT RULES (NON-NEGOTIABLE):
+- "title": Write as an SEO-optimized YouTube title (60 chars max, include the primary keyword near the start, avoid clickbait punctuation overload).
+- "hook": SEO-style — must contain the primary search keyword for the niche within the first 5 words and clearly state the value/outcome. Think "How to…", "X ways to…", "Why your…".
+- "caption": LONGER, keyword-rich description (4-7 sentences). Open with the primary keyword in sentence 1, naturally weave 3-5 related long-tail keywords throughout, include a clear CTA to subscribe + comment, then a short keyword-stuffed closing line. Suitable for YouTube's description box.
+- "hashtags": Output 6-10 hashtags, space-separated. MUST include #shorts and #youtubeshorts, plus keyword-rich niche tags (no fluff tags like #love).
+- "script": Structure for 30-60s with strong retention beats every 5-7 seconds and a "stay tuned for #1" style loop.`,
+      },
+    };
 
-    const systemPrompt = `You are a viral content strategist, professional scriptwriter, and director. Generate exactly 10 viral reel ideas for ${platform} in the ${niche} niche.
-${langInstruction}${hookStyleInstruction}
+    const platformSpec = platformRulesMap[platform] ?? platformRulesMap.instagram;
+    const platformInstruction = `\n\nPLATFORM — ${platformSpec.label.toUpperCase()} (NON-NEGOTIABLE):\n${platformSpec.rule}`;
+
+    const systemPrompt = `You are a viral content strategist, professional scriptwriter, and director. Generate exactly 10 viral reel ideas for ${platformSpec.label} in the ${niche} niche.
+${langInstruction}${hookStyleInstruction}${platformInstruction}
 
 Return ONLY a valid JSON array (no markdown, no code blocks) with exactly 10 objects. Each object must have:
 - "id": number (1-10)

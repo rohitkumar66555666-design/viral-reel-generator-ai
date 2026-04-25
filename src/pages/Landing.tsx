@@ -234,7 +234,7 @@ export default function Landing() {
               className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl"
             >
               Stop struggling for content ideas. Our AI generates complete reel scripts,
-              hooks, captions & hashtags for Instagram, YouTube Shorts & Facebook Reels.
+              hooks, captions & hashtags for Instagram Reels, TikTok & YouTube Shorts.
             </motion.p>
 
             <motion.div
