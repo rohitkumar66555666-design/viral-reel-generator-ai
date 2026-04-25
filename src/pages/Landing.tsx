@@ -12,6 +12,8 @@ import {
   Star,
   Check,
   ArrowRight,
+  Play,
+  Flame,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
@@ -91,6 +93,39 @@ const testimonials = [
   { name: "Aisha K.", role: "Social Media Manager", text: "I manage 5 client accounts. This saves me hours every week. The multi-language feature is a game-changer for my international clients.", avatar: "AK" },
 ];
 
+const examples = [
+  {
+    niche: "Beauty",
+    topic: "morning skincare routine",
+    viralScore: 94,
+    hook: "I tried a dermatologist's 60-second morning routine for 14 days — my skin has never looked like this.",
+    caption:
+      "The 3 products I stopped using made the biggest difference. Save this before your next Sephora trip 💧✨",
+    hashtags: "#SkincareRoutine #GlassSkin #MorningRoutine #SkincareTips #DermApproved #GRWM #BeautyHacks",
+    accent: "from-pink-500/20 to-rose-500/10",
+  },
+  {
+    niche: "Finance",
+    topic: "side hustles for students",
+    viralScore: 91,
+    hook: "Broke college student to $4K/month in 90 days — and no, it's not dropshipping.",
+    caption:
+      "The 3 side hustles nobody talks about because they actually work. #2 made me $1,200 last week 💸 Comment 'HUSTLE' for the full breakdown.",
+    hashtags: "#SideHustle #StudentLife #PassiveIncome #MoneyTips #FinancialFreedom #CollegeHacks #HustleCulture",
+    accent: "from-emerald-500/20 to-teal-500/10",
+  },
+  {
+    niche: "Fitness",
+    topic: "10-minute home workout",
+    viralScore: 88,
+    hook: "Trainers won't tell you this — but 10 minutes of THIS beats an hour at the gym.",
+    caption:
+      "No equipment. No excuses. Just 10 minutes a day and your core will thank you in 2 weeks. Save & share with a friend 💪🔥",
+    hashtags: "#HomeWorkout #FitnessMotivation #10MinuteWorkout #NoGymNoProblem #AbsWorkout #FitTok #GetFit2025",
+    accent: "from-orange-500/20 to-amber-500/10",
+  },
+];
+
 const pricingPlans = [
   { name: "Free", price: "₹0", period: "forever", desc: "Perfect for getting started", features: ["5 idea generations per day", "All 25 niches", "3 platforms supported", "Copy scripts & captions", "Basic hashtag suggestions"], cta: "Get Started Free", popular: false },
   { name: "Pro", price: "₹99", period: "/month", desc: "For serious content creators", features: ["Unlimited generations", "All 25 niches", "Priority AI processing", "Save unlimited ideas", "Advanced viral analytics", "Multi-language support", "Export to CSV"], cta: "Go Pro ✨", popular: true },
@@ -133,6 +168,7 @@ export default function Landing() {
           </div>
           <nav className="hidden items-center gap-6 md:flex">
             <a href="#features" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Features</a>
+            <a href="#examples" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Examples</a>
             <a href="#testimonials" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Testimonials</a>
             <a href="#pricing" className="text-sm text-muted-foreground transition-colors hover:text-foreground">Pricing</a>
           </nav>
@@ -287,6 +323,100 @@ export default function Landing() {
                 <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </ParallaxSection>
+
+      {/* ── See It In Action ── */}
+      <ParallaxSection id="examples" className="border-t border-border py-20 sm:py-28" speed={0.18}>
+        <div className="container">
+          <div className="mb-14 text-center">
+            <p className="text-sm font-medium uppercase tracking-widest text-primary">See It In Action</p>
+            <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">
+              Real Outputs From <span className="gradient-text">Real Topics</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+              Type a topic. Get a scroll-stopping hook, a caption that converts, and a hashtag stack ready to paste. Here's exactly what you get:
+            </p>
+          </div>
+
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid gap-6 md:grid-cols-3"
+          >
+            {examples.map((ex) => (
+              <motion.article
+                key={ex.topic}
+                variants={staggerItem}
+                whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-border card-gradient transition-colors hover:border-primary/40 hover:glow-shadow"
+              >
+                {/* Accent gradient top bar */}
+                <div className={`h-1.5 w-full bg-gradient-to-r ${ex.accent}`} />
+
+                <div className="flex flex-1 flex-col p-6">
+                  {/* Niche + viral score */}
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+                      {ex.niche}
+                    </span>
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                      <Flame className="h-3.5 w-3.5 text-accent" />
+                      <span className="gradient-text">{ex.viralScore}</span>
+                      <span className="text-muted-foreground">viral</span>
+                    </div>
+                  </div>
+
+                  {/* Topic input mock */}
+                  <div className="mb-5">
+                    <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                      Your Topic
+                    </p>
+                    <div className="flex items-center gap-2 rounded-lg border border-border bg-background/60 px-3 py-2.5">
+                      <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary" />
+                      <span className="truncate text-sm font-medium text-foreground">{ex.topic}</span>
+                    </div>
+                  </div>
+
+                  {/* Hook */}
+                  <div className="mb-5">
+                    <p className="mb-1.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-primary">
+                      <Play className="h-3 w-3 fill-primary" /> Hook
+                    </p>
+                    <p className="font-display text-base font-semibold leading-snug text-foreground">
+                      "{ex.hook}"
+                    </p>
+                  </div>
+
+                  {/* Caption */}
+                  <div className="mb-4">
+                    <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                      Caption
+                    </p>
+                    <p className="text-sm leading-relaxed text-foreground/80">{ex.caption}</p>
+                  </div>
+
+                  {/* Hashtags */}
+                  <div className="mt-auto border-t border-border/60 pt-4">
+                    <p className="mb-1.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                      <Hash className="h-3 w-3" /> Hashtags
+                    </p>
+                    <p className="text-xs leading-relaxed text-primary/90 break-words">{ex.hashtags}</p>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+
+          <div className="mt-12 text-center">
+            <Button variant="gradient" size="lg" onClick={handleCTA} className="px-8">
+              <Sparkles className="mr-2 h-5 w-5" />
+              Generate Your Own — Free
+            </Button>
+            <p className="mt-3 text-xs text-muted-foreground">No credit card. 5 free generations daily.</p>
           </div>
         </div>
       </ParallaxSection>
