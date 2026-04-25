@@ -12,13 +12,40 @@ serve(async (req) => {
   }
 
   try {
-    const { platform, niche, language = "english" } = await req.json();
+    const { platform, niche, language = "english", hookStyle = "curiosity" } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
     const langInstruction = language !== "english"
       ? `IMPORTANT: Write ALL titles, hooks, scripts, captions, and hashtags in ${language}. Only the JSON keys should remain in English.`
       : "";
+
+    const hookStyleMap: Record<string, { label: string; rule: string }> = {
+      curiosity: {
+        label: "Curiosity Gap",
+        rule: `Every hook MUST open with a curiosity gap that withholds key information and forces the viewer to keep watching. Use phrases like "You won't believe…", "Nobody talks about…", "The one thing nobody tells you…", "What happens next will…", "I wasn't supposed to share this but…". Tease an outcome without revealing it.`,
+      },
+      story: {
+        label: "Story Opener",
+        rule: `Every hook MUST start as a personal first-person story revealing vulnerability or transformation. Use openers like "I used to struggle with…", "3 months ago I was…", "Last year I almost gave up because…", "Nobody knows this but I…". The hook is the opening line of a story, not a statement.`,
+      },
+      shock: {
+        label: "Shock Stat",
+        rule: `Every hook MUST lead with a surprising, specific statistic or hard number that pattern-interrupts the scroll. Use formats like "9 out of 10 people…", "97% of creators are doing this wrong…", "Only 3% of…", "Studies show 80%…". The number must feel concrete and shocking. Round numbers and made-up but plausible stats are encouraged for hook impact.`,
+      },
+      controversial: {
+        label: "Controversial Take",
+        rule: `Every hook MUST be a bold, polarizing opinion that triggers debate in the comments. Use openers like "Unpopular opinion:", "Hot take:", "I'm gonna get hate for this but…", "Everyone is wrong about…", "Stop doing X. It's actually killing your…". Take a clear contrarian stance — no fence-sitting.`,
+      },
+      cta: {
+        label: "Direct CTA",
+        rule: `Every hook MUST be a direct command to the viewer that demands an immediate action or self-identification. Use openers like "Stop scrolling if you…", "Watch this before you…", "Save this if you ever…", "Don't post another reel until you…", "Read this twice.". Speak directly to the viewer using "you".`,
+      },
+    };
+
+    const hookSpec = hookStyleMap[hookStyle] ?? hookStyleMap.curiosity;
+    const hookStyleInstruction = `\n\nHOOK STYLE — ${hookSpec.label.toUpperCase()} (NON-NEGOTIABLE):\n${hookSpec.rule}\nALL 10 hooks must follow this exact style. Vary the wording, but never break the pattern.`;
+
 
     const systemPrompt = `You are a viral content strategist, professional scriptwriter, and director. Generate exactly 10 viral reel ideas for ${platform} in the ${niche} niche.
 ${langInstruction}
