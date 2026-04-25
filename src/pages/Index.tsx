@@ -153,6 +153,7 @@ const Index = () => {
 
       const generatedIdeas: ReelIdea[] = data.ideas;
       setIdeas(generatedIdeas);
+      setActiveHookStyle(hookStyle);
       setGenerated(true);
 
       // Log usage (skip for admins)
