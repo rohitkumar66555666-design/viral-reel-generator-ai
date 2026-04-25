@@ -9,6 +9,7 @@ import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
 import { NicheSelector, type Niche } from "@/components/NicheSelector";
 import { LanguageSelector, type Language } from "@/components/LanguageSelector";
 import { IdeaCard, type ReelIdea } from "@/components/IdeaCard";
+import { HookStyleSelector, HOOK_STYLES, type HookStyle } from "@/components/HookStyleSelector";
 import { VideoGeneratorDialog } from "@/components/VideoGeneratorDialog";
 import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { useAuth } from "@/contexts/AuthContext";
@@ -22,6 +23,8 @@ const Index = () => {
   const [niche, setNiche] = useState<Niche>("motivation");
   const [ideas, setIdeas] = useState<ReelIdea[]>([]);
   const [language, setLanguage] = useState<Language>("english");
+  const [hookStyle, setHookStyle] = useState<HookStyle>("curiosity");
+  const [activeHookStyle, setActiveHookStyle] = useState<HookStyle>("curiosity");
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
@@ -137,7 +140,7 @@ const Index = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-ideas", {
-        body: { platform, niche, language },
+        body: { platform, niche, language, hookStyle },
       });
 
       if (error) {
@@ -150,6 +153,7 @@ const Index = () => {
 
       const generatedIdeas: ReelIdea[] = data.ideas;
       setIdeas(generatedIdeas);
+      setActiveHookStyle(hookStyle);
       setGenerated(true);
 
       // Log usage (skip for admins)
@@ -234,7 +238,7 @@ const Index = () => {
             <PlatformSelector selected={platform} onSelect={setPlatform} />
           </div>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+          <div className="flex flex-col gap-4 sm:flex-row">
             <div className="flex-1">
               <label className="mb-2 block font-display text-sm font-medium text-muted-foreground">
                 Niche
@@ -247,21 +251,29 @@ const Index = () => {
               </label>
               <LanguageSelector selected={language} onSelect={setLanguage} />
             </div>
-            <Button
-              variant="gradient"
-              size="lg"
-              onClick={handleGenerate}
-              disabled={loading}
-              className="animate-pulse-glow sm:w-auto"
-            >
-              {loading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Sparkles className="h-4 w-4" />
-              )}
-              {loading ? "Generating…" : user ? "Generate Ideas" : "Sign In to Generate"}
-            </Button>
           </div>
+
+          <div>
+            <label className="mb-2 block font-display text-sm font-medium text-muted-foreground">
+              Hook Style
+            </label>
+            <HookStyleSelector selected={hookStyle} onSelect={setHookStyle} />
+          </div>
+
+          <Button
+            variant="gradient"
+            size="lg"
+            onClick={handleGenerate}
+            disabled={loading}
+            className="animate-pulse-glow w-full sm:w-auto"
+          >
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Sparkles className="h-4 w-4" />
+            )}
+            {loading ? "Generating…" : user ? "Generate Ideas" : "Sign In to Generate"}
+          </Button>
         </div>
 
         {/* Results */}
@@ -285,11 +297,31 @@ const Index = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <div className="mb-6 flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-primary" />
-                <h3 className="font-display text-lg font-semibold">
-                  {ideas.length} Viral Ideas Generated
-                </h3>
+              <div className="mb-6 flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                  <h3 className="font-display text-lg font-semibold">
+                    {ideas.length} Viral Ideas Generated
+                  </h3>
+                </div>
+                {(() => {
+                  const active = HOOK_STYLES.find((s) => s.id === activeHookStyle);
+                  if (!active) return null;
+                  const Icon = active.icon;
+                  return (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary glow-shadow"
+                    >
+                      <Icon className="h-3 w-3" />
+                      <span>{active.label}</span>
+                      <span className="text-[10px] font-normal italic text-primary/70">
+                        "{active.example}"
+                      </span>
+                    </motion.div>
+                  );
+                })()}
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 {ideas.map((idea, i) => (
