@@ -48,7 +48,7 @@ serve(async (req) => {
 
 
     const systemPrompt = `You are a viral content strategist, professional scriptwriter, and director. Generate exactly 10 viral reel ideas for ${platform} in the ${niche} niche.
-${langInstruction}
+${langInstruction}${hookStyleInstruction}
 
 Return ONLY a valid JSON array (no markdown, no code blocks) with exactly 10 objects. Each object must have:
 - "id": number (1-10)
