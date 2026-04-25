@@ -93,6 +93,39 @@ const testimonials = [
   { name: "Aisha K.", role: "Social Media Manager", text: "I manage 5 client accounts. This saves me hours every week. The multi-language feature is a game-changer for my international clients.", avatar: "AK" },
 ];
 
+const examples = [
+  {
+    niche: "Beauty",
+    topic: "morning skincare routine",
+    viralScore: 94,
+    hook: "I tried a dermatologist's 60-second morning routine for 14 days — my skin has never looked like this.",
+    caption:
+      "The 3 products I stopped using made the biggest difference. Save this before your next Sephora trip 💧✨",
+    hashtags: "#SkincareRoutine #GlassSkin #MorningRoutine #SkincareTips #DermApproved #GRWM #BeautyHacks",
+    accent: "from-pink-500/20 to-rose-500/10",
+  },
+  {
+    niche: "Finance",
+    topic: "side hustles for students",
+    viralScore: 91,
+    hook: "Broke college student to $4K/month in 90 days — and no, it's not dropshipping.",
+    caption:
+      "The 3 side hustles nobody talks about because they actually work. #2 made me $1,200 last week 💸 Comment 'HUSTLE' for the full breakdown.",
+    hashtags: "#SideHustle #StudentLife #PassiveIncome #MoneyTips #FinancialFreedom #CollegeHacks #HustleCulture",
+    accent: "from-emerald-500/20 to-teal-500/10",
+  },
+  {
+    niche: "Fitness",
+    topic: "10-minute home workout",
+    viralScore: 88,
+    hook: "Trainers won't tell you this — but 10 minutes of THIS beats an hour at the gym.",
+    caption:
+      "No equipment. No excuses. Just 10 minutes a day and your core will thank you in 2 weeks. Save & share with a friend 💪🔥",
+    hashtags: "#HomeWorkout #FitnessMotivation #10MinuteWorkout #NoGymNoProblem #AbsWorkout #FitTok #GetFit2025",
+    accent: "from-orange-500/20 to-amber-500/10",
+  },
+];
+
 const pricingPlans = [
   { name: "Free", price: "₹0", period: "forever", desc: "Perfect for getting started", features: ["5 idea generations per day", "All 25 niches", "3 platforms supported", "Copy scripts & captions", "Basic hashtag suggestions"], cta: "Get Started Free", popular: false },
   { name: "Pro", price: "₹99", period: "/month", desc: "For serious content creators", features: ["Unlimited generations", "All 25 niches", "Priority AI processing", "Save unlimited ideas", "Advanced viral analytics", "Multi-language support", "Export to CSV"], cta: "Go Pro ✨", popular: true },
