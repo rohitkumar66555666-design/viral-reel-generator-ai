@@ -94,7 +94,7 @@ export default function Profile() {
               <SelectTrigger className="border-border bg-background"><SelectValue /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="instagram">Instagram Reels</SelectItem>
-                <SelectItem value="facebook">Facebook Reels</SelectItem>
+                <SelectItem value="tiktok">TikTok</SelectItem>
                 <SelectItem value="youtube">YouTube Shorts</SelectItem>
               </SelectContent>
             </Select>
