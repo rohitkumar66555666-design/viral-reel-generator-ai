@@ -297,11 +297,31 @@ const Index = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <div className="mb-6 flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-primary" />
-                <h3 className="font-display text-lg font-semibold">
-                  {ideas.length} Viral Ideas Generated
-                </h3>
+              <div className="mb-6 flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                  <h3 className="font-display text-lg font-semibold">
+                    {ideas.length} Viral Ideas Generated
+                  </h3>
+                </div>
+                {(() => {
+                  const active = HOOK_STYLES.find((s) => s.id === activeHookStyle);
+                  if (!active) return null;
+                  const Icon = active.icon;
+                  return (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary glow-shadow"
+                    >
+                      <Icon className="h-3 w-3" />
+                      <span>{active.label}</span>
+                      <span className="text-[10px] font-normal italic text-primary/70">
+                        "{active.example}"
+                      </span>
+                    </motion.div>
+                  );
+                })()}
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 {ideas.map((idea, i) => (
