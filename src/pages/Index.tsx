@@ -9,6 +9,7 @@ import { PlatformSelector, type Platform } from "@/components/PlatformSelector";
 import { NicheSelector, type Niche } from "@/components/NicheSelector";
 import { LanguageSelector, type Language } from "@/components/LanguageSelector";
 import { IdeaCard, type ReelIdea } from "@/components/IdeaCard";
+import { HookStyleSelector, HOOK_STYLES, type HookStyle } from "@/components/HookStyleSelector";
 import { VideoGeneratorDialog } from "@/components/VideoGeneratorDialog";
 import { UpgradeDialog } from "@/components/UpgradeDialog";
 import { useAuth } from "@/contexts/AuthContext";
