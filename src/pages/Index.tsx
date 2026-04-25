@@ -225,18 +225,17 @@ const Index = () => {
             Generate <span className="gradient-text">Viral Reel Ideas</span>
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-            AI-powered hooks, scripts, captions & hashtags for Instagram Reels, Facebook Reels, and YouTube Shorts.
+            AI-powered hooks, scripts, captions & hashtags for Instagram Reels, TikTok, and YouTube Shorts.
           </p>
         </motion.div>
 
+        {/* Platform tabs — top of form */}
+        <div className="mb-8 flex justify-center">
+          <PlatformSelector selected={platform} onSelect={setPlatform} />
+        </div>
+
         {/* Controls */}
         <div className="mx-auto mb-10 max-w-2xl space-y-6">
-          <div>
-            <label className="mb-2 block font-display text-sm font-medium text-muted-foreground">
-              Platform
-            </label>
-            <PlatformSelector selected={platform} onSelect={setPlatform} />
-          </div>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <div className="flex-1">
