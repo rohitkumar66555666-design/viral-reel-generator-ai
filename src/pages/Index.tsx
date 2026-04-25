@@ -23,6 +23,8 @@ const Index = () => {
   const [niche, setNiche] = useState<Niche>("motivation");
   const [ideas, setIdeas] = useState<ReelIdea[]>([]);
   const [language, setLanguage] = useState<Language>("english");
+  const [hookStyle, setHookStyle] = useState<HookStyle>("curiosity");
+  const [activeHookStyle, setActiveHookStyle] = useState<HookStyle>("curiosity");
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
   const [savedTitles, setSavedTitles] = useState<Set<string>>(new Set());
