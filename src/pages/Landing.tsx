@@ -364,7 +364,7 @@ export default function Landing() {
                       {ex.niche}
                     </span>
                     <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
-                      <Flame className="h-3.5 w-3.5 text-orange-500" />
+                      <Flame className="h-3.5 w-3.5 text-accent" />
                       <span className="gradient-text">{ex.viralScore}</span>
                       <span className="text-muted-foreground">viral</span>
                     </div>
