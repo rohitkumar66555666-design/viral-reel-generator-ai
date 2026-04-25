@@ -140,7 +140,7 @@ const Index = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-ideas", {
-        body: { platform, niche, language },
+        body: { platform, niche, language, hookStyle },
       });
 
       if (error) {
