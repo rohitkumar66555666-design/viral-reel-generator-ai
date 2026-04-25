@@ -327,6 +327,100 @@ export default function Landing() {
         </div>
       </ParallaxSection>
 
+      {/* ── See It In Action ── */}
+      <ParallaxSection id="examples" className="border-t border-border py-20 sm:py-28" speed={0.18}>
+        <div className="container">
+          <div className="mb-14 text-center">
+            <p className="text-sm font-medium uppercase tracking-widest text-primary">See It In Action</p>
+            <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">
+              Real Outputs From <span className="gradient-text">Real Topics</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+              Type a topic. Get a scroll-stopping hook, a caption that converts, and a hashtag stack ready to paste. Here's exactly what you get:
+            </p>
+          </div>
+
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid gap-6 md:grid-cols-3"
+          >
+            {examples.map((ex) => (
+              <motion.article
+                key={ex.topic}
+                variants={staggerItem}
+                whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-border card-gradient transition-colors hover:border-primary/40 hover:glow-shadow"
+              >
+                {/* Accent gradient top bar */}
+                <div className={`h-1.5 w-full bg-gradient-to-r ${ex.accent}`} />
+
+                <div className="flex flex-1 flex-col p-6">
+                  {/* Niche + viral score */}
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+                      {ex.niche}
+                    </span>
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                      <Flame className="h-3.5 w-3.5 text-orange-500" />
+                      <span className="gradient-text">{ex.viralScore}</span>
+                      <span className="text-muted-foreground">viral</span>
+                    </div>
+                  </div>
+
+                  {/* Topic input mock */}
+                  <div className="mb-5">
+                    <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                      Your Topic
+                    </p>
+                    <div className="flex items-center gap-2 rounded-lg border border-border bg-background/60 px-3 py-2.5">
+                      <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary" />
+                      <span className="truncate text-sm font-medium text-foreground">{ex.topic}</span>
+                    </div>
+                  </div>
+
+                  {/* Hook */}
+                  <div className="mb-5">
+                    <p className="mb-1.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-primary">
+                      <Play className="h-3 w-3 fill-primary" /> Hook
+                    </p>
+                    <p className="font-display text-base font-semibold leading-snug text-foreground">
+                      "{ex.hook}"
+                    </p>
+                  </div>
+
+                  {/* Caption */}
+                  <div className="mb-4">
+                    <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                      Caption
+                    </p>
+                    <p className="text-sm leading-relaxed text-foreground/80">{ex.caption}</p>
+                  </div>
+
+                  {/* Hashtags */}
+                  <div className="mt-auto border-t border-border/60 pt-4">
+                    <p className="mb-1.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                      <Hash className="h-3 w-3" /> Hashtags
+                    </p>
+                    <p className="text-xs leading-relaxed text-primary/90 break-words">{ex.hashtags}</p>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+
+          <div className="mt-12 text-center">
+            <Button variant="gradient" size="lg" onClick={handleCTA} className="px-8">
+              <Sparkles className="mr-2 h-5 w-5" />
+              Generate Your Own — Free
+            </Button>
+            <p className="mt-3 text-xs text-muted-foreground">No credit card. 5 free generations daily.</p>
+          </div>
+        </div>
+      </ParallaxSection>
+
       {/* ── Testimonials ── */}
       <ParallaxSection id="testimonials" className="border-t border-border py-20 sm:py-28" speed={0.1}>
         <div className="container">
